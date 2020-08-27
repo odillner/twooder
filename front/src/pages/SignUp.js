@@ -10,7 +10,7 @@ const LogIn = () => {
 
     const dispatch = useDispatch()
 
-    const logIn = (e) => {
+    const logIn = async (e) => {
         e.preventDefault()
 
         const username = nameField.input.value
@@ -23,7 +23,7 @@ const LogIn = () => {
     }
 
     return (
-        <div className="signin-form">
+        <div className="signup-form">
             <form>
                 name:
                 <input {...nameField.input} />
@@ -32,7 +32,7 @@ const LogIn = () => {
                 <input {...passwordField.input} />
 
                 <div>
-                    <button id="signin-button" type="submit" onClick={logIn}>
+                    <button id="signup-button" type="submit" onClick={logIn}>
                         Log In
                     </button>
                 </div>
