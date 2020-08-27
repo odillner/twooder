@@ -4,10 +4,12 @@ import {Switch, Route, Redirect} from 'react-router-dom'
 
 import Notification from './components/Notification'
 import NavBar from './components/NavBar'
+import Header from './components/Header'
 
 import SignUp from './pages/SignUp'
 import SignIn from './pages/SignIn'
 import Profile from './pages/Profile'
+import NewTwood from './pages/NewTwood'
 import Home from './pages/Home'
 
 import {initSession} from './reducers/session'
@@ -22,6 +24,7 @@ function App() {
 
     return (
         <div>
+            <Header/>
             <NavBar/>
             <Notification/>
             <Switch>
@@ -36,6 +39,9 @@ function App() {
                 </Route>
                 <Route path="/profile/">
                     {session ? <Profile /> : <Redirect to="/signin" />}
+                </Route>
+                <Route path="/newtwood/">
+                    {session ? <NewTwood /> : <Redirect to="/signin" />}
                 </Route>
                 <Route path="/">
                     {session ? <Redirect to="/profile" /> : <Home />}

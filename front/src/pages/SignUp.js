@@ -1,8 +1,10 @@
 import React from 'react'
 import {useDispatch} from 'react-redux'
 
-import {initSession} from '../reducers/session'
 import {useField} from '../hooks'
+import {info, error} from '../reducers/notification'
+
+import userService from '../services/users'
 
 const LogIn = () => {
     const nameField = useField('text')
@@ -10,13 +12,19 @@ const LogIn = () => {
 
     const dispatch = useDispatch()
 
-    const logIn = async (e) => {
+    const signUp = async (e) => {
         e.preventDefault()
 
-        const username = nameField.input.value
-        const password = passwordField.input.value
-
-        dispatch(initSession(username, password))
+        const user = {
+            username: nameField.input.value,
+            password: passwordField.input.value
+        }
+        try {
+            await userService.create(user)
+            dispatch(info('Successfully created user', 5))
+        } catch (err) {
+            dispatch(error('Failed to create user', 5))
+        }
 
         nameField.clear()
         passwordField.clear()
@@ -24,6 +32,7 @@ const LogIn = () => {
 
     return (
         <div className="signup-form">
+            <h1>SIGN UP</h1>
             <form>
                 name:
                 <input {...nameField.input} />
@@ -31,11 +40,9 @@ const LogIn = () => {
                 password:
                 <input {...passwordField.input} />
 
-                <div>
-                    <button id="signup-button" type="submit" onClick={logIn}>
-                        Log In
-                    </button>
-                </div>
+                <button id="signup-button" type="submit" onClick={signUp}>
+                    Sign Up
+                </button>
             </form>
         </div>
     )

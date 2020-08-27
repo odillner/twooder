@@ -18,9 +18,12 @@ const NavBar = () => {
             <Link to="/">Home</Link>
             {session
                 ?
-                <Link to="/" className="right" onClick={logOut}>Log Out</Link>
+                <div>
+                    <Link to="/" className="right" onClick={logOut}>Log Out</Link>
+                    <Link to="/newtwood">Twood</Link>
+                </div>
                 :
-                <Link to="/signin" className="right">Log In</Link>
+                <Link to="/signin" className="right">Sign In</Link>
             }
         </div>
     )
