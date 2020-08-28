@@ -4,13 +4,16 @@ const login = require('./controllers/login')
 
 module.exports = (app) => {
     app.route('/api/twoods')
-        .get(twoods.list)
+        .get(twoods.getAll)
         .post(twoods.create)
 
     app.route('/api/twoods/:id')
-        .get(twoods.read)
+        .get(twoods.getById)
         .put(twoods.update)
         .delete(twoods.remove)
+
+    app.route('/api/twoods/user/:id')
+        .get(twoods.getByUser)
 
     app.route('/api/users')
         .get(users.getAll)

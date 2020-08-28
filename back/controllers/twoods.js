@@ -1,12 +1,33 @@
 const Twood = require('../models/twood.js')
+const User = require('../models/user.js')
 
 module.exports = {
-    list: async (req, res, next) => {
+    getAll: async (req, res, next) => {
         try {
             const twoods = await Twood
                 .find({})
 
             res.json(twoods)
+        } catch (err) {
+            next(err)
+        }
+    },
+
+    getByUser: async (req, res, next) => {
+        try {
+            const id = req.params.id
+
+            const user = await User
+                .findById(id)
+                .populate('twoods')
+
+            if (!user) {
+                let err = new Error('Resource not found')
+                err.name = 'NotFoundError'
+                throw err
+            }
+
+            res.json(user)
         } catch (err) {
             next(err)
         }
@@ -38,7 +59,7 @@ module.exports = {
 
     },
 
-    read: async (req, res, next) => {
+    getById: async (req, res, next) => {
         try {
             const id = req.params.id
 
