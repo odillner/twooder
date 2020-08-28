@@ -2,7 +2,7 @@ import React from 'react'
 
 export const Twood = ({twood}) => {
     return (
-        <div>
+        <div className='twood'>
             {twood.content}
         </div>
     )

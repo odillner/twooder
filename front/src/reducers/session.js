@@ -2,7 +2,7 @@ import loginService from '../services/login'
 import userService from '../services/users'
 
 import {info, error} from './notification'
-import { setTwoods } from './twoods'
+import {setTwoods} from './twoods'
 
 const sessionReducer = (state = null, action) => {
     switch (action.type) {

@@ -92,12 +92,16 @@ export const deleteTwood = (twood, token) => {
 
 export const setTwoods = (userId) => {
     return async dispatch => {
-        const res = await twoodService.getByUser(userId)
+        try {
+            const res = await twoodService.getByUser(userId)
 
-        dispatch({
-            type: 'INIT_TWOODS',
-            data: res
-        })
+            dispatch({
+                type: 'INIT_TWOODS',
+                data: res
+            })
+        } catch (err) {
+            dispatch(error('Error fetching twoods', 5))
+        }
     }
 }
 

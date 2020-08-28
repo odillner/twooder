@@ -28,7 +28,7 @@ twoodSchema.set('toJSON', {
     }
 })
 
-module.exports = mongoose.model('Twoot', twoodSchema)
+module.exports = mongoose.model('Twood', twoodSchema)
 
 
 

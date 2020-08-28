@@ -1,7 +1,7 @@
 import React from 'react'
 import {useSelector} from 'react-redux'
 
-import TwoodList, { Twood } from '../components/TwoodList'
+import TwoodList, {Twood} from '../components/TwoodList'
 
 const Profile = () => {
     const twoods = useSelector(state => state.twoods)
