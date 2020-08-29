@@ -1,14 +1,12 @@
-const bcrypt = require('bcrypt')
-
-const User = require('../models/user.js')
+const Room = require('../models/user.js')
 
 module.exports = {
     getAll: async (req, res, next) => {
         try {
-            const users = await User
+            const rooms = await Room
                 .find({})
 
-            res.json(users)
+            res.json(rooms)
         } catch (err) {
             next(err)
         }
@@ -18,29 +16,9 @@ module.exports = {
         try {
             const body = req.body
 
-            if (!body.password) {
-                let err = new Error('No password field')
-                err.name = 'ValidationError'
-                throw err
-            }
+            const room = new Room(body)
 
-            if (body.password.length < 8) {
-                let err = new Error('Too short password')
-                err.name = 'ValidationError'
-                throw err
-            }
-
-            const saltRounds = 10
-            const passwordHash = await bcrypt.hash(body.password, saltRounds)
-
-            const user = new User({
-                username: body.username,
-                name: body.name,
-                email: body.email,
-                passwordHash: passwordHash
-            })
-
-            const result = await user.save()
+            const result = await room.save()
 
             res.status(201).json(result)
         } catch (err) {
@@ -52,17 +30,17 @@ module.exports = {
         try {
             const id = req.params.id
 
-            const user = await User
+            const room = await Room
                 .findById(id)
                 .populate('twoods')
 
-            if (!user) {
+            if (!room) {
                 let err = new Error('Resource not found')
                 err.name = 'NotFoundError'
                 throw err
             }
 
-            res.json(user)
+            res.json(room)
         } catch (err) {
             next(err)
         }
@@ -72,16 +50,16 @@ module.exports = {
         try {
             const name = req.params.name
 
-            const user = await User
-                .findOne({username:name})
+            const room = await Room
+                .findOne({name:name})
 
-            if (!user) {
+            if (!room) {
                 let err = new Error('Resource not found')
                 err.name = 'NotFoundError'
                 throw err
             }
 
-            res.json(user)
+            res.json(room)
         } catch (err) {
             next(err)
         }
@@ -92,16 +70,16 @@ module.exports = {
             const id = req.params.id
             const body = req.body
 
-            const user = await User
+            const room = await Room
                 .findOneAndUpdate({_id: id}, body, {new: true, useFindAndModify: false, runValidators: true})
 
-            if (!user) {
+            if (!room) {
                 let err = new Error('Resource not found')
                 err.name = 'NotFoundError'
                 throw err
             }
 
-            res.json(user)
+            res.json(room)
         } catch (err) {
             next(err)
         }
@@ -111,16 +89,16 @@ module.exports = {
         try {
             const id = req.params.id
 
-            const user = await User
+            const room = await Room
                 .findById(id)
 
-            if (!user) {
+            if (!room) {
                 let err = new Error('Resource not found')
                 err.name = 'NotFoundError'
                 throw err
             }
 
-            await User
+            await Room
                 .deleteOne({'_id':id})
 
             res.status(200).end()

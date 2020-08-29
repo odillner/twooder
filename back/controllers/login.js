@@ -8,7 +8,9 @@ module.exports = {
         try {
             const body = req.body
 
-            const user = await User.findOne({username: body.username})
+            const user = await User
+                .findOne({username: body.username})
+                .populate('twoods') /* populated so that twoods can be loaded without separete request */
 
             const passwordCorrect = user === null
                 ? false

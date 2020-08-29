@@ -9,9 +9,9 @@ const twoodSchema = mongoose.Schema({
         type: Number,
         default: 0
     },
-    comments: [{
-        type: String,
-        default: 0
+    replies: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Twood'
     }],
     user: {
         type: mongoose.Schema.Types.ObjectId,
