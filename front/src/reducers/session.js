@@ -33,7 +33,7 @@ export const initSession = (username, password) => {
                     data: res
                 })
 
-                dispatch(setTwoods(res.user.id))
+                dispatch(setTwoods(res.user.twoods))
                 dispatch(info('Successfully logged in', 5))
             } catch (err) {
                 dispatch(error('Failed to log in, password or username incorrect', 5))
@@ -55,7 +55,7 @@ export const initSession = (username, password) => {
                         }
                     })
 
-                    dispatch(setTwoods(id))
+                    dispatch(setTwoods(user.twoods))
                 } catch (err) {
                     window.localStorage.removeItem('id')
                     window.localStorage.removeItem('token')

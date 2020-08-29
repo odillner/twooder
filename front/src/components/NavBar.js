@@ -16,6 +16,7 @@ const NavBar = () => {
     return(
         <div className="navbar">
             <Link to="/">Home</Link>
+            <Link to="/twoods">Twoods</Link>
             {session
                 ?
                 <div>

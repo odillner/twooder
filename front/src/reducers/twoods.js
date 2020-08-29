@@ -90,7 +90,15 @@ export const deleteTwood = (twood, token) => {
     }
 }
 
-export const setTwoods = (userId) => {
+
+export const setTwoods = (twoods) => {
+    return ({
+        type: 'INIT_TWOODS',
+        data: twoods
+    })
+}
+
+export const setTwoodsByUser = (userId) => {
     return async dispatch => {
         try {
             const res = await twoodService.getByUser(userId)
@@ -104,5 +112,7 @@ export const setTwoods = (userId) => {
         }
     }
 }
+
+
 
 export default twoodReducer

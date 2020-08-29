@@ -11,6 +11,8 @@ import SignIn from './pages/SignIn'
 import Profile from './pages/Profile'
 import NewTwood from './pages/NewTwood'
 import Home from './pages/Home'
+import Twoods from './pages/Twoods'
+import SingleTwood from './pages/SingleTwood'
 
 import {initSession} from './reducers/session'
 
@@ -28,6 +30,12 @@ function App() {
             <NavBar/>
             <Notification/>
             <Switch>
+                <Route path="/twoods/:id">
+                    <SingleTwood/>
+                </Route>
+                <Route path="/twoods">
+                    <Twoods/>
+                </Route>
                 <Route path="/signin">
                     {session ? <Redirect to="/"/> : <SignIn/>}
                 </Route>
