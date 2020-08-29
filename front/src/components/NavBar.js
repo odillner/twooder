@@ -7,7 +7,7 @@ import {endSession} from '../reducers/session'
 
 const NavBar = () => {
     const dispatch = useDispatch()
-    const session = useSelector(state => state.session)
+    const user = useSelector(state => state.session.user)
 
     const logOut = () => {
         dispatch(endSession())
@@ -17,7 +17,7 @@ const NavBar = () => {
         <div className="navbar">
             <Link to="/">Home</Link>
             <Link to="/twoods">Twoods</Link>
-            {session
+            {user
                 ?
                 <div>
                     <Link to="/" className="right" onClick={logOut}>Log Out</Link>

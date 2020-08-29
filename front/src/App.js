@@ -18,7 +18,7 @@ import {initSession} from './reducers/session'
 
 function App() {
     const dispatch = useDispatch()
-    const session = useSelector(state => state.session)
+    const {user, storageChecked} = useSelector(state => state.session)
 
     useEffect(() => {
         dispatch(initSession())
@@ -37,22 +37,22 @@ function App() {
                     <Twoods/>
                 </Route>
                 <Route path="/signin">
-                    {session ? <Redirect to="/"/> : <SignIn/>}
+                    {user ? storageChecked ? <Redirect to="/"/> : <div/> : <SignIn/>}
                 </Route>
                 <Route path="/signup">
-                    {session ? <Redirect to="/"/> : <SignUp/>}
+                    {user ? storageChecked ? <Redirect to="/"/> : <div/> : <SignUp/>}
                 </Route>
                 <Route path="/profile/:id">
                     <Profile />
                 </Route>
                 <Route path="/profile/">
-                    {session ? <Profile /> : <Redirect to="/signin" />}
+                    {user ? <Profile /> : storageChecked ? <Redirect to="/signin" /> : <div/>}
                 </Route>
                 <Route path="/newtwood/">
-                    {session ? <NewTwood /> : <Redirect to="/signin" />}
+                    {user ? <NewTwood /> : storageChecked ? <Redirect to="/signin" /> : <div/>}
                 </Route>
                 <Route path="/">
-                    {session ? <Redirect to="/profile" /> : <Home />}
+                    <Home />
                 </Route>
             </Switch>
         </div>

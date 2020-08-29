@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from 'react-redux'
 
 import twoodService from '../services/twoods'
 
-import {info, error} from '../reducers/notification'
+import {likeTwood, deleteTwood} from '../reducers/twoods'
 
 export const useField = (type) => {
     const [value, setValue] = useState('')
@@ -29,7 +29,7 @@ export const useField = (type) => {
 export const useTwood = (id, initialState) => {
     const [twood, setTwood] = useState(null)
     const dispatch = useDispatch()
-    const session = useSelector(state => state.session)
+    const {user, token} = useSelector(state => state.session)
 
     useEffect(() => {
         if (id) {
@@ -44,20 +44,13 @@ export const useTwood = (id, initialState) => {
         setTwood(res)
     }
 
-    const like = async () => {
-        const newTwood = {
+    const like = () => {
+        dispatch(likeTwood(twood, token))
+
+        setTwood({
             ...twood,
             likes: twood.likes + 1
-        }
-
-        try {
-            const res = await twoodService.update(newTwood.id, newTwood, session.token)
-
-            setTwood(res)
-            dispatch(info('Twood successfully liked', 5))
-        } catch (err) {
-            dispatch(error('Error liking twood', 5))
-        }
+        })
     }
 
     const comment = async () => {
@@ -65,19 +58,15 @@ export const useTwood = (id, initialState) => {
     }
 
     const remove = async () => {
-        try {
-            await twoodService.remove(twood.id, session.token)
+        dispatch(deleteTwood(twood, token))
 
-            setTwood(null)
-            dispatch(info('Twood successfully deleted', 5))
-        } catch (err) {
-            dispatch(error('Error deleting twood', 5))
-        }
+        setTwood(null)
     }
+
     const operations = {
-        like,
-        comment,
-        remove
+        like: (user) ? like : null,
+        comment: (user) ? comment : null,
+        remove: (user && twood) ? (user.id === twood.user) ? remove : null : null
     }
 
     return {

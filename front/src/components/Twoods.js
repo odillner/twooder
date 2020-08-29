@@ -1,10 +1,10 @@
 import React from 'react'
-import {useSelector} from 'react-redux'
 import {useTwood} from '../hooks'
 import {Link} from 'react-router-dom'
 
 export const Twood = ({id, initialState}) => {
     const {twood, operations} = useTwood(id, initialState)
+    const {like, comment, remove} = operations
 
     if (!twood) {
         return <div/>
@@ -14,10 +14,11 @@ export const Twood = ({id, initialState}) => {
             <h3>{twood.content}</h3>
             <p>
                 LIKES: {twood.likes}
-                <button onClick={() => operations.like()}>LIKE</button>
+                {like ? <button onClick={() => operations.like()}>LIKE</button> : <a/>}
             </p>
             <p>USER: {twood.user}</p>
             <p>ID: {twood.id}</p>
+            {remove ? <button onClick={() => operations.remove()}>REMOVE</button> : <a/>}
         </div>
     )
 }

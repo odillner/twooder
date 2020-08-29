@@ -4,13 +4,24 @@ import userService from '../services/users'
 import {info, error} from './notification'
 import {setTwoods} from './twoods'
 
-const sessionReducer = (state = null, action) => {
+const initialState = {
+    user: null,
+    token: null,
+    storageChecked: false
+}
+const sessionReducer = (state = initialState, action) => {
     switch (action.type) {
     case 'INIT': {
-        return action.data
+        return {
+            ...action.data,
+            storageChecked: true
+        }
     }
     case 'RESET': {
-        return null
+        return {
+            ...initialState,
+            storageChecked: true
+        }
     }
     default: return state
     }
@@ -64,6 +75,10 @@ export const initSession = (username, password) => {
                         type: 'RESET'
                     })
                 }
+            } else {
+                dispatch({
+                    type: 'RESET'
+                })
             }
         }
 
@@ -76,6 +91,8 @@ export const endSession = () => {
         window.localStorage.removeItem('token')
 
         dispatch(info('Successfully logged out', 5))
+
+        dispatch(setTwoods([]))
 
         dispatch({
             type: 'RESET'
