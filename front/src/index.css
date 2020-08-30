@@ -50,6 +50,15 @@ body {
       display: inline-block;
       border: 2px solid;
   }
+
+  .content {   
+    flex: 80%;
+    background-color: #333;
+    padding: 10px;
+    flex-wrap: wrap;
+    display: inline-block;
+    border: 2px solid;
+}
   
   .twood {   
       flex: 80%;
@@ -59,6 +68,15 @@ body {
       display: inline-block;
       border: 2px solid;
   }
+
+  .reply {   
+    flex: 80%;
+    background-color: #333;
+    padding: 10px;
+    flex-wrap: wrap;
+    display: inline-block;
+    border: 2px solid;
+}
   
   .header {
       padding: 60px;

@@ -1,24 +1,33 @@
-import React from 'react'
+import React, { useState, useEffect} from 'react'
 import {useParams} from 'react-router-dom'
-import {useSelector} from 'react-redux'
 
-import {Twood, TwoodList} from '../components/Twoods'
+import {Profile, ProfileList} from '../components/Profile'
+/*
+const SingleUser = (id) => {
+    const [user, setUser] = useState(null)
 
+    useEffect(() => {
+        userService.getById(id)
+    }, [])
+
+    const getTwood = async () => {
+        const res = await userService.getById(id)
+        setTwood(res)
+    }
+}
+*/
 const Users = () => {
-    const twoods = useSelector(state => state.twoods)
     const id = useParams().id
 
     if (id) {
-        const twood = twoods.find(twood => twood.id === id)
-
         return (
-            <Twood twood={twood}/>
+            <Profile/>
         )
     } else {
         return (
             <div>
                 <h1>Twoods</h1>
-                <TwoodList twoods={twoods}/>
+                <ProfileList/>
             </div>
         )
     }

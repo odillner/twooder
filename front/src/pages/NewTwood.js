@@ -3,10 +3,8 @@ import {useDispatch, useSelector} from 'react-redux'
 
 import {createTwood} from '../reducers/twoods'
 import {useField} from '../hooks'
-import {useHistory} from 'react-router-dom'
 
 const LogIn = () => {
-    const history = useHistory()
     const contentField = useField('text')
     const dispatch = useDispatch()
     const session = useSelector(state => state.session)

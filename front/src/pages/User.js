@@ -2,23 +2,22 @@ import React, {useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 
 import {TwoodList} from '../components/Twoods'
-import {setAllTwoods} from '../reducers/twoods'
+import {setTwoodsByUser} from '../reducers/twoods'
 
-const Twoods = () => {
+const User = () => {
     const twoods = useSelector(state => state.twoods)
+    const {user} = useSelector(state => state.session)
+
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(setAllTwoods())
+        dispatch(setTwoodsByUser(user.id))
     }, [])
 
     return (
-        <div>
-            <h1>Twoods</h1>
-            <TwoodList twoods={twoods}/>
-        </div>
+        <TwoodList twoods={twoods}/>
     )
 }
 
 
-export default Twoods
+export default User

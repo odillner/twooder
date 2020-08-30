@@ -68,8 +68,6 @@ export const likeTwood = (twood, token) => {
         } catch (err) {
             dispatch(error('Error liking twood', 5))
         }
-
-
     }
 }
 
@@ -102,6 +100,21 @@ export const setTwoodsByUser = (userId) => {
     return async dispatch => {
         try {
             const res = await twoodService.getByUser(userId)
+
+            dispatch({
+                type: 'INIT_TWOODS',
+                data: res
+            })
+        } catch (err) {
+            dispatch(error('Error fetching twoods', 5))
+        }
+    }
+}
+
+export const setAllTwoods = () => {
+    return async dispatch => {
+        try {
+            const res = await twoodService.getAll()
 
             dispatch({
                 type: 'INIT_TWOODS',

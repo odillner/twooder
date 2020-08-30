@@ -37,7 +37,9 @@ module.exports = {
         try {
             const id = req.params.id
 
-            const twood = await Twood.findById(id)
+            const twood = await Twood
+                .findById(id)
+                .populate('user')
 
             if (!twood) {
                 let err = new Error('Resource not found')

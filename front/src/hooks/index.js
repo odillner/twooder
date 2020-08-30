@@ -53,7 +53,7 @@ export const useTwood = (id, initialState) => {
         })
     }
 
-    const comment = async () => {
+    const reply = async () => {
         return null
     }
 
@@ -65,8 +65,8 @@ export const useTwood = (id, initialState) => {
 
     const operations = {
         like: (user) ? like : null,
-        comment: (user) ? comment : null,
-        remove: (user && twood) ? (user.id === twood.user) ? remove : null : null
+        reply: (user) ? reply : null,
+        remove: (user && twood) ? (user.id === twood.user.id) ? remove : null : null
     }
 
     return {

@@ -85,9 +85,14 @@ export default {
             throw err
         }
     },
-    update: async (id, newTwood, token) => {
+    update: async (id, obj, token) => {
         try {
+            const newTwood = {
+                ...obj,
+                user: (obj.user.id) ? obj.user.id : obj.user
+            }
             logger.info(extension, 'Updating twood', id, newTwood)
+
 
             const res = await axios.put(`${baseUrl}${id}`, newTwood, {
                 headers: {
