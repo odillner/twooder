@@ -12,6 +12,9 @@ module.exports = (app) => {
         .put(twoods.update)
         .delete(twoods.remove)
 
+    app.route('/api/twoods/:id/reply')
+        .post(twoods.reply)
+
     app.route('/api/twoods/user/:id')
         .get(twoods.getByUser)
 

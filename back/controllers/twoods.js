@@ -40,6 +40,7 @@ module.exports = {
             const twood = await Twood
                 .findById(id)
                 .populate('user')
+                .populate('replies')
 
             if (!twood) {
                 let err = new Error('Resource not found')
@@ -90,7 +91,8 @@ module.exports = {
                 {_id: id},
                 body,
                 {new: true, useFindAndModify: false, runValidators: true}
-            )
+            ).populate('user')
+
 
             if (!newTwood) {
                 let err = new Error('Resource not found')
@@ -100,6 +102,43 @@ module.exports = {
 
             res.json(newTwood)
             res.end()
+        } catch (err) {
+            next(err)
+        }
+    },
+
+    reply: async (req, res, next) => {
+        try {
+            const id = req.params.id
+            const user = req.authUser
+            const body = req.body
+
+            if (!user) {
+                let err = new Error('Invalid token')
+                err.name = 'AuthenticationError'
+                throw err
+            }
+
+            const twoodToCommentOn = await Twood.findById(id)
+
+            if (!twoodToCommentOn) {
+                let err = new Error('Resource not found')
+                err.name = 'NotFoundError'
+                throw err
+            }
+
+            const twood = new Twood(body)
+
+            twood.user = user.id
+
+            const newTwood = await twood.save()
+            user.twoods = user.twoods.concat(newTwood._id)
+            await user.save()
+
+            twoodToCommentOn.replies = twoodToCommentOn.replies.concat(newTwood._id)
+            await twoodToCommentOn.save()
+
+            res.status(201).json(newTwood)
         } catch (err) {
             next(err)
         }
