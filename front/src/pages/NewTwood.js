@@ -1,5 +1,6 @@
 import React from 'react'
 import {useDispatch, useSelector} from 'react-redux'
+import {useHistory} from 'react-router-dom'
 
 import twoodService from '../services/twoods'
 
@@ -9,7 +10,7 @@ import {info, error} from '../reducers/notification'
 const NewTwood = () => {
     const contentField = useField('text')
     const token = useSelector(state => state.session.token)
-
+    const history = useHistory()
     const dispatch = useDispatch()
 
     const create = async (e) => {
@@ -20,9 +21,11 @@ const NewTwood = () => {
         }
 
         try {
-            await twoodService.create(newTwood, token)
+            const res = await twoodService.create(newTwood, token)
 
             dispatch(info('Twood successfully created', 5))
+
+            history.push(`twoods/${res.id}`)
         } catch (err) {
             dispatch(error('Error creating twood', 5))
         }

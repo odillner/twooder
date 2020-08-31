@@ -107,6 +107,35 @@ module.exports = {
         }
     },
 
+    like: async (req, res, next) => {
+        try {
+            const id = req.params.id
+            const user = req.authUser
+
+            if (!user) {
+                let err = new Error('Invalid token')
+                err.name = 'AuthenticationError'
+                throw err
+            }
+
+            const twoodToLike = await Twood.findById(id)
+
+            if (!twoodToLike) {
+                let err = new Error('Resource not found')
+                err.name = 'NotFoundError'
+                throw err
+            }
+
+            twoodToLike.likes++
+            const newTwood = await twoodToLike.save()
+
+            res.json(newTwood)
+            res.end()
+        } catch (err) {
+            next(err)
+        }
+    },
+
     reply: async (req, res, next) => {
         try {
             const id = req.params.id

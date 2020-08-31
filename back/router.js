@@ -1,5 +1,6 @@
 const twoods = require('./controllers/twoods')
 const users = require('./controllers/users')
+const rooms = require('./controllers/rooms')
 const login = require('./controllers/login')
 
 module.exports = (app) => {
@@ -15,6 +16,9 @@ module.exports = (app) => {
     app.route('/api/twoods/:id/reply')
         .post(twoods.reply)
 
+    app.route('/api/twoods/:id/like')
+        .post(twoods.like)
+
     app.route('/api/twoods/user/:id')
         .get(twoods.getByUser)
 
@@ -26,6 +30,15 @@ module.exports = (app) => {
         .get(users.getById)
         .put(users.update)
         .delete(users.remove)
+
+    app.route('/api/rooms')
+        .get(rooms.getAll)
+        .post(rooms.create)
+
+    app.route('/api/rooms/:id')
+        .get(rooms.getById)
+        .put(rooms.update)
+        .delete(rooms.remove)
 
     app.route('/api/login/')
         .post(login.auth)

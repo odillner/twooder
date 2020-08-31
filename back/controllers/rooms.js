@@ -1,4 +1,4 @@
-const Room = require('../models/user.js')
+const Room = require('../models/room.js')
 
 module.exports = {
     getAll: async (req, res, next) => {
