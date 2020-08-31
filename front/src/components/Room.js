@@ -4,27 +4,24 @@ import {Link} from 'react-router-dom'
 import TwoodList from './Twood'
 
 export const Room = ({room}) => {
-    if (room) {
-        return (
-            <div className='profile'>
-                <h1>room</h1>
-                <p>name: {room.name} </p>
-                <p>id: {room.id} </p>
-                <div>
-                    <TwoodList twoods={room.twoods}/>
-                </div>
-            </div>
-        )
+    if (!room) {
+        return null
     }
-
     return (
-        <div/>
+        <div className='profile'>
+            <h1>room</h1>
+            <p>name: {room.name} </p>
+            <p>id: {room.id} </p>
+            <div>
+                <TwoodList twoods={room.twoods}/>
+            </div>
+        </div>
     )
 }
 
 export const RoomList = ({rooms}) => {
     if (!rooms) {
-        return (<div/>)
+        return null
     }
     return (
         <div>

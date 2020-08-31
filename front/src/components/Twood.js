@@ -4,60 +4,63 @@ import {Link} from 'react-router-dom'
 
 export const TwoodLink = ({twood}) => {
     if (!twood) {
-        return <div/>
-    } else {
-        const {user} = twood
-
-        return (
-            <div className='twood'>
-                <p>{user.username}</p>
-                <div className='content'>
-                    <Link to={`/twoods/${twood.id}`}>
-                        <h3>{twood.content}</h3>
-                    </Link>
-                    <p>LIKES: {twood.likes}</p>
-                </div>
-            </div>
-        )
+        return null
     }
+
+    const {user} = twood
+
+    return (
+        <div className='twood'>
+            <p>{user.username}</p>
+            <div className='content'>
+                <Link to={`/twoods/${twood.id}`}>
+                    <h3>{twood.content}</h3>
+                </Link>
+                <p>LIKES: {twood.likes}</p>
+            </div>
+        </div>
+    )
+
 }
 
 export const TwoodReply = ({id, initialState}) => {
     const {twood, operations} = useTwood(id, initialState)
 
     if (!twood) {
-        return <div/>
-    } else {
-        const {user} = twood
-        const {like} = operations
-
-        return (
-            <div className='reply'>
-                <p>{user.username}</p>
-                <div className='content'>
-                    <Link to={`/twoods/${twood.id}`}>
-                        <h3>{twood.content}</h3>
-                    </Link>
-                    <p>
-                        LIKES: {twood.likes}
-                        {like ? <button onClick={() => like()}>LIKE</button> : <></>}
-                    </p>
-                </div>
-            </div>
-        )
+        return null
     }
+
+    const {user} = twood
+    const {like} = operations
+
+    return (
+        <div className='reply'>
+            <p>{user.username}</p>
+            <div className='content'>
+                <Link to={`/twoods/${twood.id}`}>
+                    <h3>{twood.content}</h3>
+                </Link>
+                <p>
+                    LIKES: {twood.likes}
+                    {like ? <button onClick={() => like()}>LIKE</button> : <></>}
+                </p>
+            </div>
+        </div>
+    )
+
 }
 
 export const Twood = ({id, initialState}) => {
     const {twood, operations, replyField} = useTwood(id, initialState)
 
     if (!twood) {
-        return <div/>
-    } else {
-        const {like, reply, remove} = operations
-        const {user} = twood
+        return null
+    }
+    const {like, reply, remove} = operations
+    const {user} = twood
 
-        return (
+    return (
+        <div>
             <div className='twood'>
                 <p>{user.username}</p>
                 <div className='content'>
@@ -81,16 +84,17 @@ export const Twood = ({id, initialState}) => {
                     : <></>
                 }
                 {remove ? <button onClick={() => remove()}>REMOVE</button> : <></>}
-                <div className='replies'>
-                    {twood.replies.map(reply => {
-                        return (
-                            <TwoodReply key={reply.id} id={reply.id}/>
-                        )
-                    })}
-                </div>
             </div>
-        )
-    }
+            <div className='replies'>
+                {twood.replies.map(reply => {
+                    return (
+                        <TwoodReply key={reply.id} id={reply.id}/>
+                    )
+                })}
+            </div>
+        </div>
+    )
+
 }
 
 export const TwoodList = ({twoods}) => {

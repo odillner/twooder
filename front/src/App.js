@@ -3,11 +3,13 @@ import {useDispatch} from 'react-redux'
 
 import Notification from './components/Notification'
 import NavBar from './components/NavBar'
-import Header from './components/Header'
 
 import Navigation from './pages/'
-
+import StyleWrapper from './styles'
 import {initSession} from './reducers/session'
+
+import {Panel} from 'react95'
+
 
 function App() {
     const dispatch = useDispatch()
@@ -17,12 +19,11 @@ function App() {
     }, [])
 
     return (
-        <div>
-            <Header/>
+        <StyleWrapper>
             <NavBar/>
             <Notification/>
             <Navigation/>
-        </div>
+        </StyleWrapper>
     )
 }
 

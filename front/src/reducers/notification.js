@@ -2,7 +2,7 @@ const notificationReducer = (state = null, action) => {
     switch (action.type) {
     case 'DISPLAY_INFO': {
         const newState = {
-            type: 'info',
+            type: 'Notification',
             message: action.data.message,
             timeout: action.data.timeout
         }
@@ -10,7 +10,7 @@ const notificationReducer = (state = null, action) => {
     }
     case 'DISPLAY_ERROR': {
         const newState = {
-            type: 'error',
+            type: 'Error',
             message: action.data.message,
             timeout: action.data.timeout
         }

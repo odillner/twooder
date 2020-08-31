@@ -3,6 +3,10 @@ import TwoodList from './Twood'
 import {Link} from 'react-router-dom'
 
 export const Profile = ({user}) => {
+    if (!user) {
+        return null
+    }
+
     if (user) {
         return (
             <div className='profile'>
@@ -16,15 +20,14 @@ export const Profile = ({user}) => {
         )
     }
 
-    return (
-        <div/>
-    )
+
 }
 
 export const ProfileList = ({users}) => {
     if (!users) {
-        return (<div/>)
+        return null
     }
+
     return (
         <div>
             {users.map(user => {
