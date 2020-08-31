@@ -2,7 +2,6 @@ import loginService from '../services/login'
 import userService from '../services/users'
 
 import {info, error} from './notification'
-import {setTwoods} from './twoods'
 
 const initialState = {
     user: null,
@@ -44,7 +43,6 @@ export const initSession = (username, password) => {
                     data: res
                 })
 
-                dispatch(setTwoods(res.user.twoods))
                 dispatch(info('Successfully logged in', 5))
             } catch (err) {
                 dispatch(error('Failed to log in, password or username incorrect', 5))
@@ -66,7 +64,6 @@ export const initSession = (username, password) => {
                         }
                     })
 
-                    dispatch(setTwoods(user.twoods))
                 } catch (err) {
                     window.localStorage.removeItem('id')
                     window.localStorage.removeItem('token')
@@ -91,8 +88,6 @@ export const endSession = () => {
         window.localStorage.removeItem('token')
 
         dispatch(info('Successfully logged out', 5))
-
-        dispatch(setTwoods([]))
 
         dispatch({
             type: 'RESET'

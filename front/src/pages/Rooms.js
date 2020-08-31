@@ -7,7 +7,7 @@ import userService from '../services/users'
 import {Profile, ProfileList} from '../components/Profile'
 import {info, error} from '../reducers/notification'
 
-export const SingleUser = () => {
+export const SingleRoom = () => {
     const [user, setUser] = useState(null)
     const id = useParams().id
 
@@ -33,7 +33,7 @@ export const SingleUser = () => {
     )
 }
 
-export const Users = () => {
+export const Rooms = () => {
     const [users, setUsers] = useState([])
 
     const dispatch = useDispatch()

@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from 'react-redux'
 
 import twoodService from '../services/twoods'
 
-import {likeTwood, deleteTwood} from '../reducers/twoods'
+import {info, error} from '../reducers/notification'
 
 export const useField = (type) => {
     const [value, setValue] = useState('')
@@ -30,6 +30,7 @@ export const useTwood = (id, initialState) => {
     const [twood, setTwood] = useState(null)
     const dispatch = useDispatch()
     const {user, token} = useSelector(state => state.session)
+    const replyField = useField('text')
 
     useEffect(() => {
         if (id) {
@@ -44,23 +45,53 @@ export const useTwood = (id, initialState) => {
         setTwood(res)
     }
 
-    const like = () => {
-        dispatch(likeTwood(twood, token))
+    const like = async () => {
+        try {
+            await twoodService.like(twood.id, token)
 
-        setTwood({
-            ...twood,
-            likes: twood.likes + 1
-        })
+            setTwood({
+                ...twood,
+                likes: twood.likes+1
+            })
+
+            dispatch(info('Twood successfully liked', 5))
+        } catch (err) {
+            dispatch(error('Error liking twood', 5))
+        }
+
+
     }
 
-    const reply = async () => {
-        return null
+    const reply = async (content, e) => {
+        e.preventDefault()
+        try {
+            const newTwood = {
+                content: content
+            }
+            const res = await twoodService.reply(twood.id, newTwood, token)
+
+            setTwood({
+                ...twood,
+                replies: twood.replies.concat(res)
+            })
+
+            replyField.clear()
+
+            dispatch(info('Twood successfully replied to', 5))
+        } catch (err) {
+            dispatch(error('Error replying to twood', 5))
+        }
     }
 
     const remove = async () => {
-        dispatch(deleteTwood(twood, token))
+        try {
+            await twoodService.remove(twood.id, token)
 
-        setTwood(null)
+            setTwood(null)
+            dispatch(info('Twood successfully deleted', 5))
+        } catch (err) {
+            dispatch(error('Error deleting twood', 5))
+        }
     }
 
     const operations = {
@@ -71,6 +102,7 @@ export const useTwood = (id, initialState) => {
 
     return {
         twood,
-        operations
+        operations,
+        replyField
     }
 }

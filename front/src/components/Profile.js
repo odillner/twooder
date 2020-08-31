@@ -1,5 +1,5 @@
 import React from 'react'
-import TwoodList from './Twoods'
+import TwoodList from './Twood'
 import {Link} from 'react-router-dom'
 
 export const Profile = ({user}) => {
@@ -30,8 +30,8 @@ export const ProfileList = ({users}) => {
             {users.map(user => {
                 return (
                     <div key={user.id} className='profile'>
-                        <h1>profile</h1>
                         <Link to={`/users/${user.id}`}>
+                            <h1>profile</h1>
                             <p>username: {user.username} </p>
                         </Link>
                         <p>id: {user.id} </p>

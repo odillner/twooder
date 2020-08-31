@@ -107,5 +107,43 @@ export default {
             logger.error(extension, err)
             throw err
         }
+    },
+    like: async (id, token) => {
+        try {
+            logger.info(extension, 'Liking twood', id)
+
+
+            const res = await axios.post(`${baseUrl}${id}/like`, null, {
+                headers: {
+                    Authorization: 'Bearer ' + token
+                }
+            })
+
+            logger.info(extension, 'Twood successfully liked', id, res)
+
+            return res.data
+        } catch (err) {
+            logger.error(extension, err)
+            throw err
+        }
+    },
+    reply: async (id, newTwood, token) => {
+        try {
+            logger.info(extension, 'Replying to twood', id, newTwood)
+
+
+            const res = await axios.post(`${baseUrl}${id}/reply`, newTwood, {
+                headers: {
+                    Authorization: 'Bearer ' + token
+                }
+            })
+
+            logger.info(extension, 'Twood replied to', id, res)
+
+            return res.data
+        } catch (err) {
+            logger.error(extension, err)
+            throw err
+        }
     }
 }

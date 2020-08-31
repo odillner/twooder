@@ -71,7 +71,7 @@ body {
 
   .reply {   
     flex: 80%;
-    background-color: #333;
+    background-color: #666;
     padding: 10px;
     flex-wrap: wrap;
     display: inline-block;

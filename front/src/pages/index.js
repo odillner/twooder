@@ -5,11 +5,10 @@ import {Switch, Route, Redirect} from 'react-router-dom'
 import SignUp from './SignUp'
 import SignIn from './SignIn'
 import User from './User'
-import Users from './Users'
+import {SingleUser, Users} from './Users'
 import NewTwood from './NewTwood'
 import Home from './Home'
-import Twoods from './Twoods'
-import SingleTwood from './SingleTwood'
+import {Twoods, SingleTwood} from './Twoods'
 
 function Navigation() {
     const {user, storageChecked} = useSelector(state => state.session)
@@ -29,7 +28,7 @@ function Navigation() {
                 {user ? storageChecked ? <Redirect to="/"/> : <div/> : <SignUp/>}
             </Route>
             <Route path="/users/:id">
-                <Users />
+                <SingleUser />
             </Route>
             <Route path="/users/">
                 <Users />

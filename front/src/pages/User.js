@@ -1,17 +1,29 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 
-import {TwoodList} from '../components/Twoods'
-import {setTwoodsByUser} from '../reducers/twoods'
+import twoodService from '../services/twoods'
+
+import {TwoodList} from '../components/Twood'
+import {info, error} from '../reducers/notification'
 
 const User = () => {
-    const twoods = useSelector(state => state.twoods)
+    const [twoods, setTwoods] = useState([])
     const {user} = useSelector(state => state.session)
 
     const dispatch = useDispatch()
 
+
+    const getTwoods = async () => {
+        try {
+            const res = await twoodService.getByUser(user.id)
+
+            setTwoods(res)
+        } catch (err) {
+            dispatch(error('Error fetching twoods', 5))
+        }
+    }
     useEffect(() => {
-        dispatch(setTwoodsByUser(user.id))
+        getTwoods()
     }, [])
 
     return (

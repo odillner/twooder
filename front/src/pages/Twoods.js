@@ -1,15 +1,37 @@
-import React, {useEffect} from 'react'
-import {useSelector, useDispatch} from 'react-redux'
+import React, {useEffect, useState} from 'react'
+import {useDispatch} from 'react-redux'
+import {useParams} from 'react-router-dom'
 
-import {TwoodList} from '../components/Twoods'
-import {setAllTwoods} from '../reducers/twoods'
+import twoodService from '../services/twoods'
 
-const Twoods = () => {
-    const twoods = useSelector(state => state.twoods)
+import {Twood, TwoodList} from '../components/Twood'
+import {info, error} from '../reducers/notification'
+
+export const SingleTwood = () => {
+    const id = useParams().id
+
+    return (
+        <Twood id={id}/>
+    )
+}
+
+
+export const Twoods = () => {
+    const [twoods, setTwoods] = useState([])
+
     const dispatch = useDispatch()
 
+    const getTwoods = async () => {
+        try {
+            const res = await twoodService.getAll()
+
+            setTwoods(res)
+        } catch (err) {
+            dispatch(error('Error fetching twoods', 5))
+        }
+    }
     useEffect(() => {
-        dispatch(setAllTwoods())
+        getTwoods()
     }, [])
 
     return (
@@ -19,6 +41,3 @@ const Twoods = () => {
         </div>
     )
 }
-
-
-export default Twoods

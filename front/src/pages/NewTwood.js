@@ -1,22 +1,31 @@
 import React from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 
-import {createTwood} from '../reducers/twoods'
+import twoodService from '../services/twoods'
+
 import {useField} from '../hooks'
+import {info, error} from '../reducers/notification'
 
 const LogIn = () => {
     const contentField = useField('text')
-    const dispatch = useDispatch()
-    const session = useSelector(state => state.session)
+    const token = useSelector(state => state.session.token)
 
-    const create = (e) => {
+    const dispatch = useDispatch()
+
+    const create = async (e) => {
         e.preventDefault()
 
         const newTwood = {
             content: contentField.input.value
         }
 
-        dispatch(createTwood(newTwood, session.token))
+        try {
+            await twoodService.create(newTwood, token)
+
+            dispatch(info('Twood successfully created', 5))
+        } catch (err) {
+            dispatch(error('Error creating twood', 5))
+        }
 
         contentField.clear()
     }

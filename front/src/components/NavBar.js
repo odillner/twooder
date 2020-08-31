@@ -18,6 +18,7 @@ const NavBar = () => {
             <Link to="/">Home</Link>
             <Link to="/twoods">Twoods</Link>
             <Link to="/users">Users</Link>
+            <Link to="/rooms">Rooms</Link>
             {user
                 ?
                 <div>
