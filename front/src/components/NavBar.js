@@ -25,6 +25,7 @@ const NavBar = () => {
                     <Link to="/" className="right" onClick={logOut}>Log Out</Link>
                     <Link to="/user" className="right">Profile</Link>
                     <Link to="/newtwood">Twood</Link>
+                    <Link to="/newroom">New Room</Link>
                 </div>
                 :
                 <Link to="/signin" className="right">Sign In</Link>

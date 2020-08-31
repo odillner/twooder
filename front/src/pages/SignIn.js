@@ -13,7 +13,7 @@ const LogIn = () => {
 
     const dispatch = useDispatch()
 
-    const signUp = (e) => {
+    const signIn = (e) => {
         e.preventDefault()
 
         const username = nameField.input.value
@@ -35,7 +35,7 @@ const LogIn = () => {
                 password:
                 <input {...passwordField.input} />
 
-                <button id="signin-button" type="submit" onClick={signUp}>
+                <button id="signin-button" type="submit" onClick={signIn}>
                     Sign In
                 </button>
             </form>

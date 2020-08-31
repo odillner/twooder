@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
-import {useParams} from 'react-router-dom'
+import {useParams, useHistory} from 'react-router-dom'
 
 import roomService from '../services/rooms'
 
@@ -10,10 +10,10 @@ import {Room, RoomList} from '../components/Room'
 import {info, error} from '../reducers/notification'
 
 
-const NewRoom = () => {
+export const NewRoom = () => {
     const nameField = useField('text')
     const token = useSelector(state => state.session.token)
-
+    const history = useHistory()
     const dispatch = useDispatch()
 
     const create = async (e) => {
@@ -24,9 +24,11 @@ const NewRoom = () => {
         }
 
         try {
-            await roomService.create(newRoom, token)
+            const res = await roomService.create(newRoom, token)
 
             dispatch(info('Room successfully created', 5))
+
+            history.push(`rooms/${res.id}`)
         } catch (err) {
             dispatch(error('Error creating Room', 5))
         }
@@ -80,7 +82,7 @@ export const Rooms = () => {
 
     const dispatch = useDispatch()
 
-    const getROoms = async () => {
+    const getRooms = async () => {
         try {
             const res = await roomService.getAll()
 
@@ -90,12 +92,11 @@ export const Rooms = () => {
         }
     }
     useEffect(() => {
-        getROoms()
+        getRooms()
     }, [])
 
     return (
         <div>
-            <NewRoom/>
             <h1>Rooms</h1>
             <RoomList rooms={rooms}/>
         </div>
