@@ -13,17 +13,17 @@ export const SingleUser = () => {
 
     const dispatch = useDispatch()
 
-    const getUsers = async () => {
+    const getUser = async () => {
         try {
             const res = await userService.getById(id)
 
             setUser(res)
         } catch (err) {
-            dispatch(error('Error fetching twoods', 5))
+            dispatch(error('Error fetching user', 5))
         }
     }
     useEffect(() => {
-        getUsers()
+        getUser()
     }, [])
 
     return (
@@ -44,7 +44,7 @@ export const Users = () => {
 
             setUsers(res)
         } catch (err) {
-            dispatch(error('Error fetching twoods', 5))
+            dispatch(error('Error fetching users', 5))
         }
     }
     useEffect(() => {

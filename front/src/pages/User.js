@@ -19,7 +19,7 @@ const User = () => {
 
             setTwoods(res)
         } catch (err) {
-            dispatch(error('Error fetching twoods', 5))
+            dispatch(error('Error fetching user', 5))
         }
     }
     useEffect(() => {

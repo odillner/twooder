@@ -1,63 +1,103 @@
 import React, {useState, useEffect} from 'react'
-import {useDispatch} from 'react-redux'
+import {useSelector, useDispatch} from 'react-redux'
 import {useParams} from 'react-router-dom'
 
-import userService from '../services/users'
+import roomService from '../services/rooms'
 
-import {Profile, ProfileList} from '../components/Profile'
+import {useField} from '../hooks'
+
+import {Room, RoomList} from '../components/Room'
 import {info, error} from '../reducers/notification'
 
+
+const NewRoom = () => {
+    const nameField = useField('text')
+    const token = useSelector(state => state.session.token)
+
+    const dispatch = useDispatch()
+
+    const create = async (e) => {
+        e.preventDefault()
+
+        const newRoom = {
+            name: nameField.input.value
+        }
+
+        try {
+            await roomService.create(newRoom, token)
+
+            dispatch(info('Room successfully created', 5))
+        } catch (err) {
+            dispatch(error('Error creating Room', 5))
+        }
+
+        nameField.clear()
+    }
+
+    return (
+        <div className="newtwood-form">
+            <h1>NEW ROOM</h1>
+            <form>
+                name:
+                <input {...nameField.input} />
+
+                <button type="submit" onClick={create}>
+                    Create
+                </button>
+            </form>
+        </div>
+    )
+}
+
 export const SingleRoom = () => {
-    const [user, setUser] = useState(null)
+    const [room, setRoom] = useState(null)
     const id = useParams().id
 
     const dispatch = useDispatch()
 
-    const getUsers = async () => {
+    const getRoom = async () => {
         try {
-            const res = await userService.getById(id)
+            const res = await roomService.getById(id)
 
-            setUser(res)
+            setRoom(res)
         } catch (err) {
-            dispatch(error('Error fetching twoods', 5))
+            dispatch(error('Error fetching room', 5))
         }
     }
     useEffect(() => {
-        getUsers()
+        getRoom()
     }, [])
 
     return (
         <div>
-            <Profile user={user}/>
+            <Room room={room}/>
         </div>
     )
 }
 
 export const Rooms = () => {
-    const [users, setUsers] = useState([])
+    const [rooms, setRooms] = useState([])
 
     const dispatch = useDispatch()
 
-    const getUsers = async () => {
+    const getROoms = async () => {
         try {
-            const res = await userService.getAll()
+            const res = await roomService.getAll()
 
-            setUsers(res)
+            setRooms(res)
         } catch (err) {
-            dispatch(error('Error fetching twoods', 5))
+            dispatch(error('Error fetching rooms', 5))
         }
     }
     useEffect(() => {
-        getUsers()
+        getROoms()
     }, [])
 
     return (
         <div>
-            <h1>Users</h1>
-            <ProfileList users={users}/>
+            <NewRoom/>
+            <h1>Rooms</h1>
+            <RoomList rooms={rooms}/>
         </div>
     )
 }
-
-
-export default Users

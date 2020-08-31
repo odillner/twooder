@@ -6,7 +6,7 @@ import twoodService from '../services/twoods'
 import {useField} from '../hooks'
 import {info, error} from '../reducers/notification'
 
-const LogIn = () => {
+const NewTwood = () => {
     const contentField = useField('text')
     const token = useSelector(state => state.session.token)
 
@@ -45,4 +45,4 @@ const LogIn = () => {
     )
 }
 
-export default LogIn
+export default NewTwood
