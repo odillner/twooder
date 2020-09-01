@@ -1,13 +1,13 @@
 import React, {useState, useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import {useParams, useHistory} from 'react-router-dom'
+import {TextField, Button} from 'react95'
 
 import roomService from '../services/rooms'
 import {useField} from '../hooks'
 import {Room} from '../components/Room'
 import StandardWindow from '../components/StandardWindow'
 import StandardTable from '../components/StandardTable'
-
 import {info, error} from '../reducers/notification'
 
 
@@ -38,19 +38,19 @@ export const NewRoom = () => {
     }
 
     return (
-        <div className="newtwood-form">
-            <h1>NEW ROOM</h1>
+        <StandardWindow title='New Room'>
             <form>
                 name:
-                <input {...nameField.input} />
+                <TextField {...nameField.input} />
 
-                <button type="submit" onClick={create}>
+                <Button type="submit" onClick={create}>
                     Create
-                </button>
+                </Button>
             </form>
-        </div>
+        </StandardWindow>
     )
 }
+
 
 export const SingleRoom = () => {
     const [room, setRoom] = useState(null)
@@ -71,6 +71,7 @@ export const SingleRoom = () => {
         getRoom()
     }, [])
 
+    if (!room) return null
     return (
         <StandardWindow title='Room'>
             <Room room={room}/>
@@ -79,7 +80,7 @@ export const SingleRoom = () => {
 }
 
 export const Rooms = () => {
-    const [rooms, setRooms] = useState([])
+    const [rooms, setRooms] = useState(null)
 
     const dispatch = useDispatch()
 
@@ -96,6 +97,7 @@ export const Rooms = () => {
         getRooms()
     }, [])
 
+    if (!rooms) return null
     return (
         <StandardWindow title='Rooms'>
             <StandardTable initialState={rooms} type='rooms'/>

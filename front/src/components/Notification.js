@@ -9,9 +9,8 @@ const Notification = () => {
     const notification = useSelector(state => state.notification)
     const dispatch = useDispatch()
 
-    if (notification === null) {
-        return null
-    }
+    if (notification === null) return null
+
     const style = (notification.type === 'Error') ? {backgroundColor: 'red'} : null
 
     return (

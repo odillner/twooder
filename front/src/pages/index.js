@@ -10,7 +10,7 @@ import {Users, SingleUser} from './Users'
 import {Twoods, SingleTwood, NewTwood} from './Twoods'
 import {Rooms, SingleRoom, NewRoom} from './Rooms'
 
-function Navigation() {
+function Routing() {
     const {user, storageChecked} = useSelector(state => state.session)
 
     return (
@@ -55,4 +55,4 @@ function Navigation() {
     )
 }
 
-export default Navigation
+export default Routing

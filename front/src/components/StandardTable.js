@@ -17,9 +17,8 @@ const StandardTable = ({initialState, type}) => {
 
     const tableType = tableTypes[type]
 
-    if (!current[0]) {
-        return null
-    }
+    if (!current[0]) return null
+
     return (
         <div>
             <Table>
@@ -49,8 +48,18 @@ const StandardTable = ({initialState, type}) => {
                     })}
                 </TableBody>
             </Table>
-            <Button disabled={!prev} onClick={() => prev()}>-</Button>
-            <Button disabled={!next} onClick={() => next()}>+</Button>
+            <Button
+                disabled={!prev}
+                onClick={() => prev()}
+            >
+                Prev Page
+            </Button>
+            <Button
+                disabled={!next}
+                onClick={() => next()}
+            >
+                    Next Page
+            </Button>
         </div>
     )
 }

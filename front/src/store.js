@@ -4,10 +4,12 @@ import thunk from 'redux-thunk'
 
 import notificationReducer from './reducers/notification'
 import sessionReducer from './reducers/session'
+import windowsReducer from './reducers/windows'
 
 const reducer = combineReducers({
     notification: notificationReducer,
-    session: sessionReducer
+    session: sessionReducer,
+    windows: windowsReducer
 })
 
 const store = createStore(

@@ -27,6 +27,7 @@ export const SingleUser = () => {
         getUser()
     }, [])
 
+    if (!user) return null
     return (
         <StandardWindow title='User'>
             <Profile user={user}/>
@@ -52,6 +53,8 @@ export const Users = () => {
         getUsers()
     }, [])
 
+
+    if (!users) return null
     return (
         <StandardWindow title='User'>
             <StandardTable initialState={users} type='users'/>

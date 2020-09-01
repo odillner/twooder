@@ -3,9 +3,8 @@ import React from 'react'
 import StandardTable from '../components/StandardTable'
 
 export const Room = ({room}) => {
-    if (!room) {
-        return null
-    }
+    if (!room) return null
+
     return (
         <div className='profile'>
             <h1>room</h1>

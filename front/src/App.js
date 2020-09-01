@@ -1,10 +1,10 @@
 import React, {useEffect} from 'react'
-import {useDispatch} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 
 import Notification from './components/Notification'
 import NavBar from './components/NavBar'
 
-import Navigation from './pages/'
+import Routing from './pages/'
 import StyleWrapper from './styles'
 import {initSession} from './reducers/session'
 
@@ -19,9 +19,7 @@ function App() {
         <StyleWrapper>
             <NavBar/>
             <Notification/>
-            <div style={{display: 'flex', justifyContent: 'center'}}>
-                <Navigation/>
-            </div>
+            <Routing/>
         </StyleWrapper>
     )
 }

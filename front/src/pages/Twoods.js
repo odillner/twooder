@@ -31,6 +31,7 @@ export const SingleTwood = () => {
         getTwood()
     }, [id])
 
+    if (!twood) return null
     return (
         <StandardWindow title='Twood'>
             <Twood initialState={twood}/>
@@ -56,6 +57,7 @@ export const Twoods = () => {
         getTwoods()
     }, [])
 
+    if (!twoods) return null
     return (
         <StandardWindow title='Twoods'>
             <StandardTable initialState={twoods} type='twoods'/>
@@ -95,8 +97,6 @@ export const NewTwood = () => {
     return (
         <StandardWindow title='New Twood'>
             <form>
-                title:
-                <TextField {...titleField.input} />
                 content:
                 <TextField multiline={true} {...contentField.input} />
 
