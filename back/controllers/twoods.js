@@ -37,6 +37,8 @@ module.exports = {
         try {
             const id = req.params.id
 
+            Twood.deleteMany({})
+
             const twood = await Twood
                 .findById(id)
                 .populate('user')
@@ -140,7 +142,7 @@ module.exports = {
         try {
             const id = req.params.id
             const user = req.authUser
-            const body = req.body
+            const body = {...req.body, replyTo: id}
 
             if (!user) {
                 let err = new Error('Invalid token')
@@ -148,9 +150,9 @@ module.exports = {
                 throw err
             }
 
-            const twoodToCommentOn = await Twood.findById(id)
+            const twoodToReplyTo = await Twood.findById(id)
 
-            if (!twoodToCommentOn) {
+            if (!twoodToReplyTo) {
                 let err = new Error('Resource not found')
                 err.name = 'NotFoundError'
                 throw err
@@ -164,8 +166,8 @@ module.exports = {
             user.twoods = user.twoods.concat(newTwood._id)
             await user.save()
 
-            twoodToCommentOn.replies = twoodToCommentOn.replies.concat(newTwood._id)
-            await twoodToCommentOn.save()
+            twoodToReplyTo.replies = twoodToReplyTo.replies.concat(newTwood._id)
+            await twoodToReplyTo.save()
 
             res.status(201).json(newTwood)
         } catch (err) {
@@ -198,9 +200,17 @@ module.exports = {
                 throw err
             }
 
+            /* removes twood from user list of twoods */
             const deleted = await Twood.deleteOne({'_id':id})
             user.twoods = user.twoods.filter(twood => twood.id != deleted._id)
             await user.save()
+
+            /* removes twood from list of replies */
+            if (deleted.replyTo) {
+                const replyTo = await Twood.findById(deleted.replyTo)
+                replyTo.replies = replyTo.replies.filter(twood => twood.id != deleted._id)
+                await replyTo.save()
+            }
 
             res.status(200).end()
         } catch (err) {

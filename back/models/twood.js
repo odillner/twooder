@@ -1,10 +1,6 @@
 const mongoose = require('mongoose')
 
 const twoodSchema = mongoose.Schema({
-    title: {
-        type: String,
-        required: true
-    },
     content: {
         type: String,
         required: true
@@ -15,11 +11,15 @@ const twoodSchema = mongoose.Schema({
     },
     replies: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Reply'
+        ref: 'Twood'
     }],
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
+    },
+    replyTo: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Twood'
     }
 })
 
