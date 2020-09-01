@@ -1,7 +1,6 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
 
-import TwoodList from './Twood'
+import StandardTable from '../components/StandardTable'
 
 export const Room = ({room}) => {
     if (!room) {
@@ -13,29 +12,8 @@ export const Room = ({room}) => {
             <p>name: {room.name} </p>
             <p>id: {room.id} </p>
             <div>
-                <TwoodList twoods={room.twoods}/>
+                <StandardTable initialState={room.twoods} type='twoods'/>
             </div>
-        </div>
-    )
-}
-
-export const RoomList = ({rooms}) => {
-    if (!rooms) {
-        return null
-    }
-    return (
-        <div>
-            {rooms.map(room => {
-                return (
-                    <div key={room.id} className='profile'>
-                        <Link to={`/rooms/${room.id}`}>
-                            <h1>room</h1>
-                            <p>username: {room.name} </p>
-                        </Link>
-                        <p>id: {room.id} </p>
-                    </div>
-                )
-            })}
         </div>
     )
 }

@@ -8,9 +8,6 @@ import Navigation from './pages/'
 import StyleWrapper from './styles'
 import {initSession} from './reducers/session'
 
-import {Panel} from 'react95'
-
-
 function App() {
     const dispatch = useDispatch()
 
@@ -22,7 +19,9 @@ function App() {
         <StyleWrapper>
             <NavBar/>
             <Notification/>
-            <Navigation/>
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+                <Navigation/>
+            </div>
         </StyleWrapper>
     )
 }

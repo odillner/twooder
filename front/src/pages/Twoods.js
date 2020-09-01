@@ -1,19 +1,40 @@
 import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {useParams, useHistory} from 'react-router-dom'
+import {Button, TextField} from 'react95'
 
 import twoodService from '../services/twoods'
 
 import {useField} from '../hooks'
+import StandardWindow from '../components/StandardWindow'
+import StandardTable from '../components/StandardTable'
 
-import {Twood, TwoodList} from '../components/Twood'
+import {Twood} from '../components/Twood'
 import {info, error} from '../reducers/notification'
 
 export const SingleTwood = () => {
     const id = useParams().id
+    const [twood, setTwood] = useState(null)
+
+    const dispatch = useDispatch()
+
+    const getTwood = async () => {
+        try {
+            const res = await twoodService.getById(id)
+
+            setTwood(res)
+        } catch (err) {
+            dispatch(error('Error fetching twood', 5))
+        }
+    }
+    useEffect(() => {
+        getTwood()
+    }, [id])
 
     return (
-        <Twood id={id}/>
+        <StandardWindow title='Twood'>
+            <Twood initialState={twood}/>
+        </StandardWindow>
     )
 }
 
@@ -36,23 +57,25 @@ export const Twoods = () => {
     }, [])
 
     return (
-        <div>
-            <h1>Twoods</h1>
-            <TwoodList twoods={twoods}/>
-        </div>
+        <StandardWindow title='Twoods'>
+            <StandardTable initialState={twoods} type='twoods'/>
+        </StandardWindow>
     )
 }
 
 export const NewTwood = () => {
-    const contentField = useField('text')
     const token = useSelector(state => state.session.token)
     const history = useHistory()
     const dispatch = useDispatch()
+
+    const titleField = useField('text')
+    const contentField = useField('text')
 
     const create = async (e) => {
         e.preventDefault()
 
         const newTwood = {
+            title: titleField.input.value,
             content: contentField.input.value
         }
 
@@ -70,16 +93,17 @@ export const NewTwood = () => {
     }
 
     return (
-        <div className="newtwood-form">
-            <h1>NEW TWOOD</h1>
+        <StandardWindow title='New Twood'>
             <form>
+                title:
+                <TextField {...titleField.input} />
                 content:
-                <input {...contentField.input} />
+                <TextField multiline={true} {...contentField.input} />
 
-                <button id="twood-button" type="submit" onClick={create}>
+                <Button id="twood-button" type="submit" onClick={create}>
                     Twood
-                </button>
+                </Button>
             </form>
-        </div>
+        </StandardWindow>
     )
 }

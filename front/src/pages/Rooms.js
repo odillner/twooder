@@ -3,10 +3,11 @@ import {useSelector, useDispatch} from 'react-redux'
 import {useParams, useHistory} from 'react-router-dom'
 
 import roomService from '../services/rooms'
-
 import {useField} from '../hooks'
+import {Room} from '../components/Room'
+import StandardWindow from '../components/StandardWindow'
+import StandardTable from '../components/StandardTable'
 
-import {Room, RoomList} from '../components/Room'
 import {info, error} from '../reducers/notification'
 
 
@@ -71,9 +72,9 @@ export const SingleRoom = () => {
     }, [])
 
     return (
-        <div>
+        <StandardWindow title='Room'>
             <Room room={room}/>
-        </div>
+        </StandardWindow>
     )
 }
 
@@ -96,9 +97,8 @@ export const Rooms = () => {
     }, [])
 
     return (
-        <div>
-            <h1>Rooms</h1>
-            <RoomList rooms={rooms}/>
-        </div>
+        <StandardWindow title='Rooms'>
+            <StandardTable initialState={rooms} type='rooms'/>
+        </StandardWindow>
     )
 }

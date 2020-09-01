@@ -1,27 +1,6 @@
 import React from 'react'
+import {Link, useHistory} from 'react-router-dom'
 import {useTwood} from '../hooks'
-import {Link} from 'react-router-dom'
-
-export const TwoodLink = ({twood}) => {
-    if (!twood) {
-        return null
-    }
-
-    const {user} = twood
-
-    return (
-        <div className='twood'>
-            <p>{user.username}</p>
-            <div className='content'>
-                <Link to={`/twoods/${twood.id}`}>
-                    <h3>{twood.content}</h3>
-                </Link>
-                <p>LIKES: {twood.likes}</p>
-            </div>
-        </div>
-    )
-
-}
 
 export const TwoodReply = ({id, initialState}) => {
     const {twood, operations} = useTwood(id, initialState)
@@ -96,17 +75,3 @@ export const Twood = ({id, initialState}) => {
     )
 
 }
-
-export const TwoodList = ({twoods}) => {
-    return (
-        <div>
-            {twoods.map(twood => {
-                return (
-                    <TwoodLink key={twood.id} twood={twood}/>
-                )
-            })}
-        </div>
-    )
-}
-
-export default TwoodList

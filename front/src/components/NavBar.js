@@ -14,6 +14,8 @@ const NavBar = () => {
     return(
         <AppBar style={{position: 'relative', zIndex: 1000}}>
             <Toolbar style={{justifyContent: 'space-between'}}>
+
+                {/* main drop down */}
                 <div style={{position: 'relative', display: 'inline-block'}}>
                     <Button
                         onClick={() => setMainOpen(!mainOpen)}
@@ -28,6 +30,8 @@ const NavBar = () => {
                     </Button>
                     {mainOpen && <MainDropDown setOpen={setMainOpen}/>}
                 </div>
+
+                {/* secondary drop down */}
                 {user ?
                     <div style={{position: 'relative', display: 'inline-block'}}>
                         <Button
@@ -74,6 +78,7 @@ const MainDropDown = ({setOpen}) => {
                     Home
                 </ListItem>
             </Link>
+            <Divider />
             <Link to="/twoods">
                 <ListItem>
                     <span role='img'>
@@ -112,7 +117,7 @@ const SecondaryDropDown = ({setOpen}) => {
         <List
             style={{
                 position: 'absolute',
-                left: '0',
+                right: '0',
                 top: '100%'
             }}
             onClick={() => setOpen(false)}
@@ -125,6 +130,7 @@ const SecondaryDropDown = ({setOpen}) => {
                     Profile
                 </ListItem>
             </Link>
+            <Divider />
             <Link to="/newtwood">
                 <ListItem>
                     <span role='img'>

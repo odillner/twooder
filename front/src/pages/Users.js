@@ -3,8 +3,9 @@ import {useDispatch} from 'react-redux'
 import {useParams} from 'react-router-dom'
 
 import userService from '../services/users'
-
-import {Profile, ProfileList} from '../components/Profile'
+import StandardWindow from '../components/StandardWindow'
+import StandardTable from '../components/StandardTable'
+import {Profile} from '../components/Profile'
 import {info, error} from '../reducers/notification'
 
 export const SingleUser = () => {
@@ -27,9 +28,9 @@ export const SingleUser = () => {
     }, [])
 
     return (
-        <div>
+        <StandardWindow title='User'>
             <Profile user={user}/>
-        </div>
+        </StandardWindow>
     )
 }
 
@@ -52,10 +53,9 @@ export const Users = () => {
     }, [])
 
     return (
-        <div>
-            <h1>Users</h1>
-            <ProfileList users={users}/>
-        </div>
+        <StandardWindow title='User'>
+            <StandardTable initialState={users} type='users'/>
+        </StandardWindow>
     )
 }
 

@@ -1,9 +1,11 @@
 import React from 'react'
 import {useDispatch} from 'react-redux'
+import {useHistory} from 'react-router-dom'
+import {Button, TextField} from 'react95'
 
+import StandardWindow from '../components/StandardWindow'
 import {initSession} from '../reducers/session'
 import {useField} from '../hooks'
-import {useHistory} from 'react-router-dom'
 
 const LogIn = () => {
     const history = useHistory()
@@ -26,25 +28,29 @@ const LogIn = () => {
     }
 
     return (
-        <div className="signin-form">
-            <h1>SIGN IN</h1>
+        <StandardWindow title='Sign In'>
             <form>
-                name:
-                <input {...nameField.input} />
+                User Name: <TextField {...nameField.input} />
+                Password: <TextField {...passwordField.input} />
 
-                password:
-                <input {...passwordField.input} />
-
-                <button id="signin-button" type="submit" onClick={signIn}>
+                <Button
+                    styles={{float: 'right'}}
+                    id="signin-button" type="submit"
+                    primary={true}
+                    onClick={signIn}
+                >
                     Sign In
-                </button>
+                </Button>
             </form>
-            <p>not a twooder user?
-                <button id="redirect-sign-up-button" type="submit" onClick={() => history.push('/signup/')}>
-                    Sign Up!
-                </button>
-            </p>
-        </div>
+            not a twooder user?
+            <Button
+                id="redirect-sign-up-button"
+                type="submit"
+                onClick={() => history.push('/signup/')}
+            >
+                Sign Up!
+            </Button>
+        </StandardWindow>
     )
 }
 

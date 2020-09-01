@@ -1,9 +1,10 @@
 import React from 'react'
 import {useDispatch} from 'react-redux'
+import {Button, TextField} from 'react95'
 
+import StandardWindow from '../components/StandardWindow'
 import {useField} from '../hooks'
 import {info, error} from '../reducers/notification'
-
 import userService from '../services/users'
 
 const LogIn = () => {
@@ -31,20 +32,20 @@ const LogIn = () => {
     }
 
     return (
-        <div className="signup-form">
-            <h1>SIGN UP</h1>
+        <StandardWindow title='Sign Up'>
             <form>
-                name:
-                <input {...nameField.input} />
+                User Name: <TextField {...nameField.input} />
+                Password: <TextField {...passwordField.input} />
 
-                password:
-                <input {...passwordField.input} />
-
-                <button id="signup-button" type="submit" onClick={signUp}>
+                <Button
+                    id="signin-button"
+                    type="submit"
+                    onClick={signUp}
+                >
                     Sign Up
-                </button>
+                </Button>
             </form>
-        </div>
+        </StandardWindow>
     )
 }
 
