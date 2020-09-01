@@ -1,10 +1,6 @@
 const mongoose = require('mongoose')
 
-const twoodSchema = mongoose.Schema({
-    title: {
-        type: String,
-        required: true
-    },
+const replySchema = mongoose.Schema({
     content: {
         type: String,
         required: true
@@ -23,7 +19,7 @@ const twoodSchema = mongoose.Schema({
     }
 })
 
-twoodSchema.set('toJSON', {
+replySchema.set('toJSON', {
     transform: (document, returnedObject) => {
         returnedObject.id = returnedObject._id.toString()
         delete returnedObject._id
@@ -32,7 +28,7 @@ twoodSchema.set('toJSON', {
     }
 })
 
-module.exports = mongoose.model('Twood', twoodSchema)
+module.exports = mongoose.model('Reply', replySchema)
 
 
 
