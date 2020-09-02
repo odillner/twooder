@@ -26,7 +26,7 @@ const windowReducer = (state = initialState, action) => {
             items: state.items.concat(newItem)
         }
 
-        /* prevents changes to localstorage before it has been checked */
+        /* prevents localstorage from being overwritten before it has been checked */
         if (state.storageChecked) {
             window.localStorage.setItem('windows', JSON.stringify(newState))
         }
@@ -85,7 +85,9 @@ const windowReducer = (state = initialState, action) => {
     }
 }
 
-export const initWindows = (initialState) => {
+export const initWindows = () => {
+    const initialState = JSON.parse(window.localStorage.getItem('windows'))
+
     return dispatch => {
         if (initialState) {
             if (initialState.items) {

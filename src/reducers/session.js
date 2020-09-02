@@ -56,9 +56,7 @@ export const continueSession = () => {
         const id = window.localStorage.getItem('id')
         const token = window.localStorage.getItem('token')
 
-        const windows = JSON.parse(window.localStorage.getItem('windows'))
-
-        dispatch(initWindows(windows))
+        dispatch(initWindows())
 
         if (id && token) {
             try {
