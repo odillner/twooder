@@ -3,6 +3,7 @@ import _ from 'lodash'
 const initialState = {
     current: 0,
     last: 0,
+    storageChecked: false,
     items: []
 }
 
@@ -25,7 +26,10 @@ const windowReducer = (state = initialState, action) => {
             items: state.items.concat(newItem)
         }
 
-        window.localStorage.setItem('windows', JSON.stringify(newState))
+        /* prevents changes to localstorage before it has been checked */
+        if (state.storageChecked) {
+            window.localStorage.setItem('windows', JSON.stringify(newState))
+        }
 
         return newState
     }
@@ -35,8 +39,21 @@ const windowReducer = (state = initialState, action) => {
             items: state.items.filter(item => item.id !== action.data)
         }
 
-        window.localStorage.setItem('windows', JSON.stringify(newState))
+        if (state.storageChecked) {
+            window.localStorage.setItem('windows', JSON.stringify(newState))
+        }
+        return newState
+    }
+    case 'UPDATE_WINDOW': {
+        const newItem = action.data
+        const newState = {
+            ...state,
+            items: state.items.map(item => (item.id === newItem.id) ? newItem : item)
+        }
 
+        if (state.storageChecked) {
+            window.localStorage.setItem('windows', JSON.stringify(newState))
+        }
         return newState
     }
     case 'SET_CURRENT_WINDOW': {
@@ -54,7 +71,12 @@ const windowReducer = (state = initialState, action) => {
         return newState
     }
     case 'INIT_WINDOWS': {
-        return action.data
+        const newState = {
+            ...state,
+            storageChecked: true
+        }
+
+        return newState
     }
     case 'RESET_WINDOWS': {
         return []
@@ -64,16 +86,28 @@ const windowReducer = (state = initialState, action) => {
 }
 
 export const initWindows = (initialState) => {
-    return {
-        type: 'INIT_WINDOWS',
-        data: initialState
+    return dispatch => {
+        if (initialState) {
+            if (initialState.items) {
+                initialState.items.map(item => {
+                    dispatch ({
+                        type: 'ADD_WINDOW',
+                        data: item
+                    })
+                })
+            }
+        }
+
+        dispatch ({type: 'INIT_WINDOWS'})
     }
 }
 
-export const addWindow = (type, initialState) => {
+export const addWindow = (type, initialState, x, y) => {
     const newWindow = {
         type,
         initialState,
+        x: (x) ? x : 0,
+        y: (y) ? y : 0,
         id: Math.floor(Math.random()*10000)
     }
     return {
@@ -81,6 +115,19 @@ export const addWindow = (type, initialState) => {
         data: newWindow
     }
 }
+
+export const updateWindowPosition = (item, x, y) => {
+    const newWindow = {
+        ...item,
+        x,
+        y,
+    }
+    return {
+        type: 'UPDATE_WINDOW',
+        data: newWindow
+    }
+}
+
 
 export const closeWindow = (id) => {
     return {
