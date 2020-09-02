@@ -16,14 +16,12 @@ export const TwoodReply = ({id, initialState}) => {
         <Fieldset
             label={user.username}
         >
-            <div className='content'>
-                <Link to={`/twoods/${twood.id}`}>
-                    <h3>{twood.content}</h3>
-                </Link>
+            <Link to={`/twoods/${twood.id}`}>
+                <h3>{twood.content}</h3>
                 <p>
                     LIKES: {twood.likes}
                 </p>
-            </div>
+            </Link>
         </Fieldset>
     )
 
@@ -64,6 +62,9 @@ export const Twood = ({id, initialState}) => {
             }
             {like ? <Button size='sm' onClick={() => like()}>LIKE</Button> : <></>}
             {remove ? <Button size='sm' onClick={() => remove()}>REMOVE</Button> : <></>}
+
+            <Divider/>
+
             <div className='replies'>
                 {twood.replies.map(reply => {
                     return (

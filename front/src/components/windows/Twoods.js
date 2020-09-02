@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import {useParams, useHistory} from 'react-router-dom'
+import {useHistory} from 'react-router-dom'
 import {Button, TextField} from 'react95'
 
 import twoodService from '../../services/twoods'

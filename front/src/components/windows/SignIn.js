@@ -4,10 +4,11 @@ import {useHistory} from 'react-router-dom'
 import {Button, TextField} from 'react95'
 
 import StandardWindow from '../StandardWindow'
-import {initSession} from '../../reducers/session'
+import {manualSignIn} from '../../reducers/session'
+import {closeWindow} from '../../reducers/windows'
 import {useField} from '../../hooks'
 
-const LogIn = ({initialState, id}) => {
+const SignIn = ({initialState, id}) => {
     const history = useHistory()
 
     const nameField = useField('text')
@@ -21,10 +22,15 @@ const LogIn = ({initialState, id}) => {
         const username = nameField.input.value
         const password = passwordField.input.value
 
-        dispatch(initSession(username, password))
+        dispatch(manualSignIn(username, password, id))
 
         nameField.clear()
         passwordField.clear()
+    }
+
+    const openSignUp = () => {
+        dispatch(closeWindow(id))
+        history.push('/signup/')
     }
 
     return (
@@ -46,12 +52,12 @@ const LogIn = ({initialState, id}) => {
             <Button
                 id="redirect-sign-up-button"
                 type="submit"
-                onClick={() => history.push('/signup/')}
+                onClick={() => openSignUp()}
             >
-                Sign Up!
+            Sign Up!
             </Button>
         </StandardWindow>
     )
 }
 
-export default LogIn
+export default SignIn

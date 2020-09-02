@@ -19,6 +19,20 @@ const windowReducer = (state = initialState, action) => {
         }
         return newState
     }
+    case 'SET_CURRENT_WINDOW': {
+        const newState = {
+            ...state,
+            current: action.data,
+        }
+        return newState
+    }
+    case 'RESET_CURRENT_WINDOW': {
+        const newState = {
+            ...state,
+            current: null,
+        }
+        return newState
+    }
     case 'RESET_WINDOWS': {
         return []
     }
@@ -42,6 +56,19 @@ export const closeWindow = (id) => {
     return {
         type: 'CLOSE_WINDOW',
         data: id
+    }
+}
+
+export const selectWindow = (id) => {
+    return {
+        type: 'SET_CURRENT_WINDOW',
+        data: id
+    }
+}
+
+export const resetSelected = () => {
+    return {
+        type: 'RESET_CURRENT_WINDOW',
     }
 }
 

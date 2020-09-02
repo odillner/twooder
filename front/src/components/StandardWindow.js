@@ -1,13 +1,14 @@
 import React from 'react'
 import {Window, WindowHeader, WindowContent, Button} from 'react95'
 import Draggable from 'react-draggable'
-import {useDispatch} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 
 import CloseIcon from './CloseIcon'
-import {closeWindow} from '../reducers/windows'
+import {closeWindow, selectWindow} from '../reducers/windows'
 import {useHistory} from 'react-router-dom'
 
 const StandardWindow = (props) => {
+    const current = useSelector(state => state.windows.current)
     const dispatch = useDispatch()
     const history = useHistory()
 
@@ -16,9 +17,19 @@ const StandardWindow = (props) => {
         history.push('/')
     }
 
+    const getzIndex = () => {
+        return (current===props.id) ? 15 : 11
+    }
+
+    const select = () => {
+        dispatch(selectWindow(props.id))
+    }
+
     return (
-        <Draggable>
-            <div style={{display: 'flex', justifyContent: 'center', position: 'absolute'}}>
+        <Draggable onMouseDown={() => select()} >
+            <div
+                style={{display: 'flex', justifyContent: 'center', position: 'absolute', zIndex: getzIndex()}}
+            >
                 <Window className='window'>
                     <WindowHeader className='window-header'>
                         {props.title}

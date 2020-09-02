@@ -1,24 +1,38 @@
 import React, {useState} from 'react'
 import {Link} from 'react-router-dom'
 import {useSelector, useDispatch} from 'react-redux'
-import {endSession} from '../reducers/session'
-
 import {AppBar, Toolbar, Button, List, ListItem, Divider} from 'react95'
+
+import {endSession} from '../reducers/session'
+import {resetSelected} from '../reducers/windows'
 
 const NavBar = () => {
     const user = useSelector(state => state.session.user)
-
+    const dispatch = useDispatch()
     const [mainOpen, setMainOpen] = useState(false)
     const [secondaryOpen, setSecondaryOpen] = useState(false)
 
+    const openMain = () => {
+        if (!mainOpen) {
+            dispatch(resetSelected())
+        }
+        setMainOpen(!mainOpen)
+    }
+
+    const openSecondary = () => {
+        if (!secondaryOpen) {
+            dispatch(resetSelected())
+        }
+        setSecondaryOpen(!mainOpen)
+    }
     return(
-        <AppBar style={{position: 'relative', zIndex: 1000}}>
+        <AppBar style={{position: 'relative', zIndex: 12}}>
             <Toolbar style={{justifyContent: 'space-between'}}>
 
                 {/* main drop down */}
                 <div style={{position: 'relative', display: 'inline-block'}}>
                     <Button
-                        onClick={() => setMainOpen(!mainOpen)}
+                        onClick={() => openMain()}
                         active={mainOpen}
                         style={{fontWeight: 'bold'}}
                     >
@@ -35,7 +49,7 @@ const NavBar = () => {
                 {user ?
                     <div style={{position: 'relative', display: 'inline-block'}}>
                         <Button
-                            onClick={() => setSecondaryOpen(!secondaryOpen)}
+                            onClick={() => openSecondary()}
                             active={secondaryOpen}
                             style={{fontWeight: 'bold'}}
                         >
@@ -66,7 +80,7 @@ const MainDropDown = ({setOpen}) => {
             style={{
                 position: 'absolute',
                 left: '0',
-                top: '100%'
+                top: '100%',
             }}
             onClick={() => setOpen(false)}
         >
@@ -118,7 +132,8 @@ const SecondaryDropDown = ({setOpen}) => {
             style={{
                 position: 'absolute',
                 right: '0',
-                top: '100%'
+                top: '100%',
+                zIndex: 13
             }}
             onClick={() => setOpen(false)}
         >
