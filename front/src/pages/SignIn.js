@@ -1,57 +1,17 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {useDispatch} from 'react-redux'
-import {useHistory} from 'react-router-dom'
-import {Button, TextField} from 'react95'
+import {addWindow} from '../reducers/windows'
 
-import StandardWindow from '../components/StandardWindow'
-import {initSession} from '../reducers/session'
-import {useField} from '../hooks'
-
-const LogIn = () => {
-    const history = useHistory()
-
-    const nameField = useField('text')
-    const passwordField = useField('text')
-
+const SignIn = () => {
     const dispatch = useDispatch()
 
-    const signIn = (e) => {
-        e.preventDefault()
-
-        const username = nameField.input.value
-        const password = passwordField.input.value
-
-        dispatch(initSession(username, password))
-
-        nameField.clear()
-        passwordField.clear()
-    }
+    useEffect(() => {
+        dispatch(addWindow('signin'))
+    }, [])
 
     return (
-        <StandardWindow title='Sign In'>
-            <form>
-                User Name: <TextField {...nameField.input} />
-                Password: <TextField {...passwordField.input} />
-
-                <Button
-                    styles={{float: 'right'}}
-                    id="signin-button" type="submit"
-                    primary={true}
-                    onClick={signIn}
-                >
-                    Sign In
-                </Button>
-            </form>
-            not a twooder user?
-            <Button
-                id="redirect-sign-up-button"
-                type="submit"
-                onClick={() => history.push('/signup/')}
-            >
-                Sign Up!
-            </Button>
-        </StandardWindow>
+        null
     )
 }
 
-export default LogIn
+export default SignIn

@@ -6,6 +6,7 @@ import NavBar from './components/NavBar'
 
 import Routing from './pages/'
 import StyleWrapper from './styles'
+import WindowRenderer from './WindowRenderer'
 import {initSession} from './reducers/session'
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
             <NavBar/>
             <Notification/>
             <Routing/>
+            <WindowRenderer/>
         </StyleWrapper>
     )
 }

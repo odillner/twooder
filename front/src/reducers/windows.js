@@ -1,22 +1,48 @@
-const windowReducer = (state = [], action) => {
+const initialState = {
+    current: 0,
+    items: []
+}
+
+const windowReducer = (state = initialState, action) => {
     switch (action.type) {
     case 'ADD_WINDOW': {
-        return state.concat(action.data)
+        const newState = {
+            current: action.data.id,
+            items: state.items.concat(action.data)
+        }
+        return newState
     }
     case 'CLOSE_WINDOW': {
-        return state.concat(action.data)
+        const newState = {
+            ...state,
+            items: state.items.filter(item => item.id != action.data)
+        }
+        return newState
     }
-    case 'RESET': {
+    case 'RESET_WINDOWS': {
         return []
     }
     default: return state
     }
 }
 
-const addWindow = (type) => {
+export const addWindow = (type, initialState) => {
+    const newWindow = {
+        type,
+        initialState,
+        id: Math.floor(Math.random()*10000)
+    }
     return {
         type: 'ADD_WINDOW',
-        data: type
+        data: newWindow
     }
 }
+
+export const closeWindow = (id) => {
+    return {
+        type: 'CLOSE_WINDOW',
+        data: id
+    }
+}
+
 export default windowReducer

@@ -1,18 +1,18 @@
 import React from 'react'
 import {useSelector} from 'react-redux'
 
-import StandardWindow from '../components/StandardWindow'
-import  {Profile} from '../components/Profile'
+import StandardWindow from '../StandardWindow'
+import {Profile} from '../Profile'
 
-const User = () => {
+const OwnUser = ({initialState, id}) => {
     const {user} = useSelector(state => state.session)
 
     return (
-        <StandardWindow title='Your Profile'>
+        <StandardWindow title='Your Profile' id={id}>
             <Profile user={user}/>
         </StandardWindow>
     )
 }
 
 
-export default User
+export default OwnUser

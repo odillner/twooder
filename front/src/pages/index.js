@@ -4,13 +4,13 @@ import {Switch, Route, Redirect} from 'react-router-dom'
 
 import SignUp from './SignUp'
 import SignIn from './SignIn'
-import User from './User'
+import OwnUser from './OwnUser'
 import Home from './Home'
 import {Users, SingleUser} from './Users'
 import {Twoods, SingleTwood, NewTwood} from './Twoods'
 import {Rooms, SingleRoom, NewRoom} from './Rooms'
 
-function Routing() {
+const Routing = () => {
     const {user, storageChecked} = useSelector(state => state.session)
 
     return (
@@ -37,10 +37,10 @@ function Routing() {
                 <SingleUser />
             </Route>
             <Route path="/users/">
-                <Users />
+                <Users/>
             </Route>
             <Route path="/user/">
-                {user ? <User /> : storageChecked ? <Redirect to="/signin" /> : <div/>}
+                {user ? <OwnUser /> : storageChecked ? <Redirect to="/signin" /> : <div/>}
             </Route>
             <Route path="/newtwood/">
                 {user ? <NewTwood /> : storageChecked ? <Redirect to="/signin" /> : <div/>}

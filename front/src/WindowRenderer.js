@@ -1,15 +1,25 @@
 import React, {useEffect} from 'react'
-import {useDispatch, useSelector} from 'react-redux'
+import {useSelector} from 'react-redux'
 
-import Navigation from './pages'
+import {windowIndex} from './components/windows/'
 
 function WindowRenderer() {
-    const dispatch = useDispatch()
-
-    const selector = useSelector(state => state.windows)
+    const windows = useSelector(state => state.windows)
 
     return (
+        <div style={{position: 'relative'}}>
+            {windows.items.map(item => {
+                const Component = windowIndex[item.type]
 
+                return (
+                    <Component
+                        key={item.id}
+                        initialState={item.initialState}
+                        id={item.id}
+                    />
+                )
+            })}
+        </div>
     )
 }
 

@@ -1,24 +1,30 @@
-import React, {useState} from 'react'
-import {Link} from 'react-router-dom'
+import React from 'react'
 import {Window, WindowHeader, WindowContent, Button} from 'react95'
 import Draggable from 'react-draggable'
+import {useDispatch} from 'react-redux'
 
 import CloseIcon from './CloseIcon'
+import {closeWindow} from '../reducers/windows'
+import {useHistory} from 'react-router-dom'
 
 const StandardWindow = (props) => {
-    const [open, setOpen] = useState(true)
+    const dispatch = useDispatch()
+    const history = useHistory()
 
-    if (!open) return null
+    const close = () => {
+        dispatch(closeWindow(props.id))
+        history.push('/')
+    }
 
     return (
-        <div style={{display: 'flex', justifyContent: 'center'}}>
-            <Draggable>
+        <Draggable>
+            <div style={{display: 'flex', justifyContent: 'center', position: 'absolute'}}>
                 <Window className='window'>
                     <WindowHeader className='window-header'>
                         {props.title}
                         <Button
                             style={{float: 'right', margin: '3px'}}
-                            onClick={() => setOpen(false)}
+                            onClick={() => close()}
                         >
                             <CloseIcon/>
                         </Button>
@@ -27,8 +33,9 @@ const StandardWindow = (props) => {
                         {props.children}
                     </WindowContent>
                 </Window>
-            </Draggable>
-        </div>
+            </div>
+        </Draggable>
+
     )
 }
 

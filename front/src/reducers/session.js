@@ -10,13 +10,13 @@ const initialState = {
 }
 const sessionReducer = (state = initialState, action) => {
     switch (action.type) {
-    case 'INIT': {
+    case 'INIT_SESSION': {
         return {
             ...action.data,
             storageChecked: true
         }
     }
-    case 'RESET': {
+    case 'RESET_SESSION': {
         return {
             ...initialState,
             storageChecked: true
@@ -39,7 +39,7 @@ export const initSession = (username, password) => {
                 window.localStorage.setItem('token', res.token)
 
                 dispatch({
-                    type: 'INIT',
+                    type: 'INIT_SESSION',
                     data: res
                 })
 
@@ -57,7 +57,7 @@ export const initSession = (username, password) => {
                     const user = await userService.getById(id)
 
                     dispatch({
-                        type: 'INIT',
+                        type: 'INIT_SESSION',
                         data: {
                             user,
                             token
@@ -69,12 +69,12 @@ export const initSession = (username, password) => {
                     window.localStorage.removeItem('token')
 
                     dispatch({
-                        type: 'RESET'
+                        type: 'RESET_SESSION'
                     })
                 }
             } else {
                 dispatch({
-                    type: 'RESET'
+                    type: 'RESET_SESSION'
                 })
             }
         }
@@ -90,7 +90,7 @@ export const endSession = () => {
         dispatch(info('Successfully logged out', 5))
 
         dispatch({
-            type: 'RESET'
+            type: 'RESET_SESSION'
         })
     }
 }

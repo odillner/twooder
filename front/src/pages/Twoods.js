@@ -1,28 +1,20 @@
-import React, {useEffect, useState} from 'react'
-import {useDispatch, useSelector} from 'react-redux'
-import {useParams, useHistory} from 'react-router-dom'
-import {Button, TextField} from 'react95'
+import React, {useEffect} from 'react'
+import {useDispatch} from 'react-redux'
+import {useParams} from 'react-router-dom'
 
 import twoodService from '../services/twoods'
-
-import {useField} from '../hooks'
-import StandardWindow from '../components/StandardWindow'
-import StandardTable from '../components/StandardTable'
-
-import {Twood} from '../components/Twood'
 import {info, error} from '../reducers/notification'
+import {addWindow} from '../reducers/windows'
 
 export const SingleTwood = () => {
     const id = useParams().id
-    const [twood, setTwood] = useState(null)
-
     const dispatch = useDispatch()
 
     const getTwood = async () => {
         try {
             const res = await twoodService.getById(id)
 
-            setTwood(res)
+            dispatch(addWindow('twood', res))
         } catch (err) {
             dispatch(error('Error fetching twood', 5))
         }
@@ -31,79 +23,41 @@ export const SingleTwood = () => {
         getTwood()
     }, [id])
 
-    if (!twood) return null
     return (
-        <StandardWindow title='Twood'>
-            <Twood initialState={twood}/>
-        </StandardWindow>
+        null
     )
 }
 
 export const Twoods = () => {
-    const [twoods, setTwoods] = useState([])
-
     const dispatch = useDispatch()
 
     const getTwoods = async () => {
         try {
             const res = await twoodService.getAll()
 
-            setTwoods(res)
+            dispatch(addWindow('twoods', res))
         } catch (err) {
             dispatch(error('Error fetching twoods', 5))
         }
     }
+
     useEffect(() => {
         getTwoods()
     }, [])
 
-    if (!twoods) return null
     return (
-        <StandardWindow title='Twoods'>
-            <StandardTable initialState={twoods} type='twoods'/>
-        </StandardWindow>
+        null
     )
 }
 
 export const NewTwood = () => {
-    const token = useSelector(state => state.session.token)
-    const history = useHistory()
     const dispatch = useDispatch()
 
-    const titleField = useField('text')
-    const contentField = useField('text')
-
-    const create = async (e) => {
-        e.preventDefault()
-
-        const newTwood = {
-            title: titleField.input.value,
-            content: contentField.input.value
-        }
-
-        try {
-            const res = await twoodService.create(newTwood, token)
-
-            dispatch(info('Twood successfully created', 5))
-
-            history.push(`twoods/${res.id}`)
-        } catch (err) {
-            dispatch(error('Error creating twood', 5))
-        }
-
-        contentField.clear()
-    }
+    useEffect(() => {
+        dispatch(addWindow('newtwood'))
+    }, [])
 
     return (
-        <StandardWindow title='New Twood'>
-            <form>
-                content:
-                <TextField multiline={true} {...contentField.input} />
-
-                <Button id="twood-button" type="submit" onClick={create}>
-                    Twood
-                </Button>
-            </form>
-        </StandardWindow>
+        null
     )
 }

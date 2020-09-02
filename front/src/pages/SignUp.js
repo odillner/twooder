@@ -1,52 +1,17 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {useDispatch} from 'react-redux'
-import {Button, TextField} from 'react95'
+import {addWindow} from '../reducers/windows'
 
-import StandardWindow from '../components/StandardWindow'
-import {useField} from '../hooks'
-import {info, error} from '../reducers/notification'
-import userService from '../services/users'
-
-const LogIn = () => {
-    const nameField = useField('text')
-    const passwordField = useField('text')
-
+const SignUp = () => {
     const dispatch = useDispatch()
 
-    const signUp = async (e) => {
-        e.preventDefault()
-
-        const user = {
-            username: nameField.input.value,
-            password: passwordField.input.value
-        }
-        try {
-            await userService.create(user)
-            dispatch(info('Successfully created user', 5))
-        } catch (err) {
-            dispatch(error('Failed to create user', 5))
-        }
-
-        nameField.clear()
-        passwordField.clear()
-    }
+    useEffect(() => {
+        dispatch(addWindow('signup'))
+    }, [])
 
     return (
-        <StandardWindow title='Sign Up'>
-            <form>
-                User Name: <TextField {...nameField.input} />
-                Password: <TextField {...passwordField.input} />
-
-                <Button
-                    id="signin-button"
-                    type="submit"
-                    onClick={signUp}
-                >
-                    Sign Up
-                </Button>
-            </form>
-        </StandardWindow>
+        null
     )
 }
 
-export default LogIn
+export default SignUp

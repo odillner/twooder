@@ -1,50 +1,41 @@
-import React, {useState, useEffect} from 'react'
+import React, {useEffect} from 'react'
 import {useDispatch} from 'react-redux'
 import {useParams} from 'react-router-dom'
 
 import userService from '../services/users'
-import StandardWindow from '../components/StandardWindow'
-import StandardTable from '../components/StandardTable'
-import {Profile} from '../components/Profile'
 import {info, error} from '../reducers/notification'
+import {addWindow} from '../reducers/windows'
 
 export const SingleUser = () => {
-    const [user, setUser] = useState(null)
     const id = useParams().id
-
     const dispatch = useDispatch()
 
     const getUser = async () => {
         try {
             const res = await userService.getById(id)
 
-            setUser(res)
+            dispatch(addWindow('user', res))
         } catch (err) {
             dispatch(error('Error fetching user', 5))
         }
     }
     useEffect(() => {
         getUser()
-    }, [])
+    }, [id])
 
-    if (!user) return null
     return (
-        <StandardWindow title='User'>
-            <Profile user={user}/>
-        </StandardWindow>
+        null
     )
 }
 
 export const Users = () => {
-    const [users, setUsers] = useState([])
-
     const dispatch = useDispatch()
 
     const getUsers = async () => {
         try {
             const res = await userService.getAll()
 
-            setUsers(res)
+            dispatch(addWindow('users', res))
         } catch (err) {
             dispatch(error('Error fetching users', 5))
         }
@@ -54,11 +45,8 @@ export const Users = () => {
     }, [])
 
 
-    if (!users) return null
     return (
-        <StandardWindow title='User'>
-            <StandardTable initialState={users} type='users'/>
-        </StandardWindow>
+        null
     )
 }
 
