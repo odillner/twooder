@@ -9,6 +9,7 @@ const tableTypes = {
     users: ['username'],
     rooms: ['name']
 }
+
 const StandardTable = ({initialState, type}) => {
     const history = useHistory()
     const {current, operations} = usePages(initialState)

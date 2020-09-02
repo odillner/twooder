@@ -7,12 +7,10 @@ export const Profile = ({user}) => {
 
     if (user) {
         return (
-            <div className='profile'>
+            <div>
                 <p>username: {user.username} </p>
                 <p>id: {user.id} </p>
-                <div>
-                    <StandardTable initialState={user.twoods} type='twoods'/>
-                </div>
+                <StandardTable initialState={user.twoods} type='twoods'/>
             </div>
         )
     }

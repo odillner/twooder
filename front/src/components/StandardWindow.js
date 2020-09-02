@@ -3,7 +3,7 @@ import {Window, WindowHeader, WindowContent, Button} from 'react95'
 import Draggable from 'react-draggable'
 import {useDispatch, useSelector} from 'react-redux'
 
-import CloseIcon from './CloseIcon'
+import CloseButton from './CloseButton'
 import {closeWindow, selectWindow} from '../reducers/windows'
 import {useHistory} from 'react-router-dom'
 
@@ -33,12 +33,7 @@ const StandardWindow = (props) => {
                 <Window className='window'>
                     <WindowHeader className='window-header'>
                         {props.title}
-                        <Button
-                            style={{float: 'right', margin: '3px'}}
-                            onClick={() => close()}
-                        >
-                            <CloseIcon/>
-                        </Button>
+                        <CloseButton onClose={close}/>
                     </WindowHeader>
                     <WindowContent>
                         {props.children}

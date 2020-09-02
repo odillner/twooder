@@ -1,6 +1,8 @@
+import React from 'react'
 import styled from 'styled-components'
+import {Button} from 'react95'
 
-export default styled.div`
+const CloseIcon = styled.div`
   display: inline-block;
   width: 16px;
   height: 16px;
@@ -28,3 +30,16 @@ export default styled.div`
     transform: translateY(-50%);
   }
 `
+
+export const CloseButton = ({onClose}) => {
+    return (
+        <Button
+            style={{float: 'right', margin: '3px'}}
+            onClick={() => onClose()}
+        >
+            <CloseIcon/>
+        </Button>
+    )
+}
+
+export default CloseButton

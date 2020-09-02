@@ -17,10 +17,8 @@ export const TwoodReply = ({id, initialState}) => {
             label={user.username}
         >
             <Link to={`/twoods/${twood.id}`}>
-                <h3>{twood.content}</h3>
-                <p>
-                    LIKES: {twood.likes}
-                </p>
+                {twood.content}
+                <p>LIKES: {twood.likes}</p>
             </Link>
         </Fieldset>
     )
@@ -38,19 +36,12 @@ export const Twood = ({id, initialState}) => {
     return (
         <div>
             <Fieldset label={user.username}>
-                <h3></h3>
-                <div className='content'>
-                    <h3>{twood.content}</h3>
-                    <p>
-                        LIKES: {twood.likes}
-                    </p>
-                </div>
+                {twood.content}
+                <p>LIKES: {twood.likes}</p>
             </Fieldset>
-
             {reply ?
                 <form>
                     <TextField {...replyField.input} />
-
                     <Button
                         size='sm'
                         onClick={(e) => {operations.reply(replyField.input.value, e)}}
@@ -58,20 +49,18 @@ export const Twood = ({id, initialState}) => {
                         REPLY
                     </Button>
                 </form>
-                : <></>
+                : null
             }
-            {like ? <Button size='sm' onClick={() => like()}>LIKE</Button> : <></>}
-            {remove ? <Button size='sm' onClick={() => remove()}>REMOVE</Button> : <></>}
+            {like ? <Button size='sm' onClick={() => like()}>LIKE</Button> : null}
+            {remove ? <Button size='sm' onClick={() => remove()}>REMOVE</Button> : null}
 
             <Divider/>
 
-            <div className='replies'>
-                {twood.replies.map(reply => {
-                    return (
-                        <TwoodReply key={reply.id} id={reply.id}/>
-                    )
-                })}
-            </div>
+            {twood.replies.map(reply => {
+                return (
+                    <TwoodReply key={reply.id} id={reply.id}/>
+                )
+            })}
         </div>
     )
 
