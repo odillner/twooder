@@ -3,7 +3,7 @@ import axios from 'axios'
 import {API_URL} from '../utils/config'
 import logger from '../utils/logger'
 
-const extension = 'api/rooms/'
+const extension = '/api/rooms/'
 const baseUrl = API_URL + extension
 
 export default {

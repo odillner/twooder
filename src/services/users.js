@@ -3,7 +3,7 @@ import axios from 'axios'
 import {API_URL} from '../utils/config'
 import logger from '../utils/logger'
 
-const extension = 'api/users/'
+const extension = '/api/users/'
 const baseUrl = API_URL + extension
 
 export default {
