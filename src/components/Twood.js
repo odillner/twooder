@@ -22,7 +22,6 @@ export const TwoodReply = ({id}) => {
             </Link>
         </Fieldset>
     )
-
 }
 
 export const Twood = ({id}) => {

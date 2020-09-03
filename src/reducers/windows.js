@@ -92,10 +92,12 @@ export const initWindows = () => {
         if (initialState) {
             if (initialState.items) {
                 initialState.items.map(item => {
-                    dispatch ({
-                        type: 'ADD_WINDOW',
-                        data: item
-                    })
+                    return (
+                        dispatch ({
+                            type: 'ADD_WINDOW',
+                            data: item
+                        })
+                    )
                 })
             }
         }

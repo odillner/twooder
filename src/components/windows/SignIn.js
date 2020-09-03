@@ -12,7 +12,7 @@ const SignIn = ({initialState, id}) => {
     const history = useHistory()
 
     const nameField = useField('text')
-    const passwordField = useField('text')
+    const passwordField = useField('password')
 
     const dispatch = useDispatch()
 

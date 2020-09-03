@@ -30,7 +30,7 @@ const twoodReducer = (state = initialState, action) => {
         }
     }
     case 'REMOVE_TWOOD': {
-        return state.filter(item => item.id != action.data)
+        return state.filter(item => item.id !== action.data)
     }
     case 'UPDATE_TWOOD': {
         const newTwood = action.data

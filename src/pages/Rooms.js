@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react'
-import {useDispatch} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import {useParams,} from 'react-router-dom'
 
 import roomService from '../services/rooms'
@@ -20,6 +20,7 @@ export const SingleRoom = () => {
             dispatch(error('Error fetching room', 5))
         }
     }
+
     useEffect(() => {
         getRoom()
     }, [])
